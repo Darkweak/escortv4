@@ -1,0 +1,29 @@
+.return-to-top-container {
+    background-color: rgba(150, 150, 150, 0.5);
+    display: flex;
+    z-index: 3;
+    cursor: pointer;
+    color: white;
+    position: fixed;
+    height: 30px;
+    width: 30px;
+    font-size: 2rem;
+    bottom: 50px;
+    right: 50px;
+    border-radius: 5px;
+}
+
+.return-to-top-container > span {
+    margin: auto;
+}
+
+@media screen and (max-width: 767px){
+    .return-to-top-container {
+        bottom: 50px;
+        right: 20px;
+    }
+}
+
+.return-to-top-container:hover {
+    background-color: rgba(50, 50, 50, 0.7);
+}

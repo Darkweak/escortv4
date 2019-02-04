@@ -1,0 +1,116 @@
+.primary {
+    background-color: #662D91 !important;
+}
+
+.primary-container {
+    background-color: #662D91;
+    color: #BFBFBF;
+}
+
+.reverse {
+    color: #662D91;
+    background-color: #BFBFBF;
+}
+
+.secondary {
+    background-color: #190826 !important;
+}
+
+.navbar {
+    border-bottom: 5px solid whitesmoke;
+}
+
+.nav-item:hover {
+    cursor: pointer;
+}
+
+#root {
+    background-color: #BFBFBF;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.body-container {
+    flex: 1 0 auto;
+}
+
+.footer {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-top: 3px solid grey;
+}
+
+.footer-content {
+    text-align: center;
+    color: ghostwhite;
+}
+
+@media screen and (max-width: 767px){
+    .footer {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .footer-content {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+}
+
+.dropdown-menu {
+    padding: 0.5rem;
+    min-width: 250px;
+}
+
+.redirect {
+    cursor: pointer;
+    color: #662D91;
+}
+
+.redirect:hover {
+    color: rgba(102, 45, 145, 0.7);
+}
+
+.b-secondary {
+    border: 1px solid #190826;
+}
+
+.card:hover {
+    background-color: rgba(80, 244, 255, 0.1);
+}
+
+body {
+    font-size: 160%;
+    font-weight: lighter;
+}
+
+.navbar-brand {
+    font-size: 140%;
+}
+
+.greyscale {
+    transition: ease-in-out all 0.5s;
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+}
+
+.greyscale:hover {
+    transition: ease-in-out all 0.5s;
+    filter: grayscale(0%);
+    -webkit-filter: grayscale(0%);
+    -moz-filter: grayscale(0%);
+    -ms-filter: grayscale(0%);
+    -o-filter: grayscale(0%);
+}
+
+.fs-600 {
+    font-size: 600%;
+}
+
+.fsr-5 {
+    font-size: 5rem;
+}

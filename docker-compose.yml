@@ -60,7 +60,7 @@ services:
       - traefik.frontend.rule=Host:cache.${DOMAIN_NAME}
 
   db:
-    image: postgres:10-alpine
+    image: postgres:9.6-alpine
     environment:
       - POSTGRES_DB=api
       - POSTGRES_USER=api-platform
@@ -79,6 +79,8 @@ services:
     volumes:
       - ./client:/usr/src/client:rw,cached
       - /usr/src/client/node_modules
+    environment:
+      - REACT_APP_API_ENTRYPOINT=${HTTP_OR_SSL}${DOMAIN_NAME}
     expose:
       - 3000
     labels:
