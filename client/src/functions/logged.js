@@ -4,6 +4,10 @@ export const isLogged = () => {
   return !!localStorage.getItem(tokenName);
 };
 
+export const getUser = () => {
+  return localStorage.getItem(tokenName);
+};
+
 export const loginUser = (value) => {
   localStorage.setItem(tokenName, value)
 };

@@ -80,12 +80,19 @@ services:
       - ./client:/usr/src/client:rw,cached
       - /usr/src/client/node_modules
     environment:
-      - REACT_APP_API_ENTRYPOINT=${HTTP_OR_SSL}${DOMAIN_NAME}
+      - REACT_APP_API_ENTRYPOINT=${HTTP_OR_SSL}api.${DOMAIN_NAME}
     expose:
       - 3000
     labels:
       - traefik.frontend.rule=Host:${DOMAIN_NAME}
       - traefik.port=3000
+  
+  mailer:
+    image: catatnight/postfix
+    environment:
+      - maildomain=${DOMAIN_NAME}
+      - smtp_user=${SMTP_USER}:${SMTP_PASSWORD}
+    
 
 volumes:
   db-data: {}

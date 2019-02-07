@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -14,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *     attributes={
  *         "normalization_context"={"groups"={"user_output_default"}},
- *         "denormalization_context"={"groups"={"user_input_default"}},
+ *         "denormalization_context"={"groups"={"user_input_default"}}
  *     },
  *     collectionOperations={
  *         "get"={"access_control"="is_granted('ROLE_USER')"},
@@ -22,11 +23,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     },
  *     itemOperations={
  *         "get"={"access_control"="(is_granted('ROLE_USER') and object == user)", "normalization_context"={"groups"={"user_output_profile"}}},
- *         "put"={"access_control"="(is_granted('ROLE_USER') and object == user)", "denormalization_context"={"groups"={"user_update"}}},
- *         "delete"={"access_control"="(is_granted('ROLE_USER') and object == user)"}
+ *         "put"={"access_control"="(is_granted('ROLE_USER') and object == user)", "denormalization_context"={"groups"={"user_update"}}}
  *     }
  * )
  * @ORM\Entity
+ * @ORM\Table(name="users")
+ * @UniqueEntity(fields={"username"}, message="Le nom d'utilisateur est déjà pris")
+ * @UniqueEntity(fields={"email"}, message="Cet email est déjà pris")
  */
 class User implements UserInterface
 {
@@ -59,9 +62,15 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(nullable=true)
+     * @Groups({"user_input_creation"})
      */
-    private $roles;
+    private $token;
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $roles = [];
 
     /**
      * @ORM\OneToMany(targetEntity="Outing", mappedBy="owner")
@@ -114,6 +123,17 @@ class User implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
         return $this;
     }
 

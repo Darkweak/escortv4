@@ -15,6 +15,9 @@ const items = [
     date: Date.now(),
     place: '7 rue de la procession',
     postcode: '51000',
+    owner: {
+      username: 'Darkweak',
+    }
   },
   {
     id: 2,
@@ -24,6 +27,9 @@ const items = [
     date: Date.now(),
     place: '7 rue de la procession',
     postcode: '51000',
+    owner: {
+      username: 'Darkweak',
+    }
   },
   {
     id: 3,
@@ -33,6 +39,9 @@ const items = [
     date: Date.now(),
     place: '7 rue de la procession',
     postcode: '51000',
+    owner: {
+      username: 'Darkweak',
+    }
   },
 ];
 

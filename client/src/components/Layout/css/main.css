@@ -114,3 +114,12 @@ body {
 .fsr-5 {
     font-size: 5rem;
 }
+
+.dropdown-item {
+    font-size: 140%;
+}
+
+.dropdown-item:active {
+    color: #662D91;
+    background-color: transparent;
+}

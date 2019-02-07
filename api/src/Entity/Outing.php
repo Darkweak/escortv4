@@ -13,10 +13,16 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *     attributes={
  *         "normalization_context"={"groups"={"outing_output_default"}},
- *         "denormalization_context"={"groups"={"outing_input_default"}},
+ *         "denormalization_context"={"groups"={"outing_input_default"}}
  *     },
  *     collectionOperations={
- *         "get"={"access_control"="is_granted('ROLE_USER')"}
+ *         "get"={"access_control"="is_granted('ROLE_USER')"},
+ *         "post_outing_create"={
+ *             "method"="POST",
+ *             "path"="/outings",
+ *             "controller"=App\Controller\OutingCreator::class,
+ *             "normalization_context"={"groups"={"outing_output_default"}},
+ *         }
  *     },
  *     itemOperations={
  *         "get"={"access_control"="(is_granted('ROLE_USER') and object.getOwner() == user)", "normalization_context"={"groups"={"outing_output_one"}}},
@@ -42,13 +48,55 @@ class Outing
     private $name;
 
     /**
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank
+     * @Groups({"outing_output_default", "outing_input_creation", "outing_output_one"})
+     */
+    private $numberStreet;
+
+    /**
+     * @ORM\Column
+     * @Assert\NotBlank
+     * @Groups({"outing_output_default", "outing_input_creation", "outing_output_one"})
+     */
+    private $street;
+
+    /**
+     * @ORM\Column(nullable=true, length=1024)
+     * @Groups({"outing_output_default", "outing_input_creation", "outing_output_one"})
+     */
+    private $complementaryStreet;
+
+    /**
+     * @ORM\Column(length=5)
+     * @Assert\NotBlank
+     * @Assert\Regex(pattern="/^[0-9]{5}$/", message="Code postal invalide")
+     * @Groups({"outing_output_default", "outing_input_creation", "outing_output_one"})
+     */
+    private $postcode;
+
+    /**
+     * @ORM\Column
+     * @Assert\NotBlank
+     * @Groups({"outing_output_default", "outing_input_creation", "outing_output_one"})
+     */
+    private $country;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Assert\NotBlank
+     * @Groups({"outing_output_default", "outing_input_creation", "outing_output_one"})
+     */
+    private $date;
+
+    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="outingsOwner")
      * @Groups({"outing_output_default", "outing_input_creation", "outing_output_one", "user_output_profile"})
      */
     private $owner;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserOuting", mappedBy="participanteTo")
+     * @ORM\OneToMany(targetEntity="UserOuting", mappedBy="participateTo")
      * @Groups({"outing_output_one"})
      */
     private $participants;
@@ -71,6 +119,72 @@ class Outing
     public function setName(string $name): self
     {
         $this->name = $name;
+        return $this;
+    }
+
+    public function getNumberStreet(): string
+    {
+        return $this->numberStreet;
+    }
+
+    public function setNumberStreet(string $numberStreet): self
+    {
+        $this->numberStreet = $numberStreet;
+        return $this;
+    }
+
+    public function getStreet(): string
+    {
+        return $this->street;
+    }
+
+    public function setStreet(string $street): self
+    {
+        $this->street = $street;
+        return $this;
+    }
+
+    public function getComplementaryStreet(): ?string
+    {
+        return $this->complementaryStreet;
+    }
+
+    public function setComplementaryStreet(?string $complementaryStreet): self
+    {
+        $this->complementaryStreet = $complementaryStreet;
+        return $this;
+    }
+
+    public function getPostcode(): string
+    {
+        return $this->postcode;
+    }
+
+    public function setPostcode(string $postcode): self
+    {
+        $this->postcode = $postcode;
+        return $this;
+    }
+
+    public function getCountry(): string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(string $country): self
+    {
+        $this->country = $country;
+        return $this;
+    }
+
+    public function getDate(): \DateTime
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTime $date): self
+    {
+        $this->date = $date;
         return $this;
     }
 

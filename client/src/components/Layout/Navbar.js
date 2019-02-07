@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {Fragment} from 'react';
+import {connect} from 'react-redux';
 import {
   Collapse,
   Container,
   DropdownMenu,
+  DropdownItem as BDropdownItem,
   DropdownToggle,
   Nav,
   Navbar as BNavbar,
@@ -14,14 +16,29 @@ import {withHandlers, withState, compose} from 'recompose';
 import './css/main.css';
 import {NavItem} from "./NavItem";
 import {LoginForm} from "../Login/Form";
-import {isLogged} from "../../functions/logged";
+import {redirectTo} from "../../functions/redirect";
+import {logout} from "../Login/store/action";
+
+const DropdownItem = ({callback_function, history, text}) => (
+  <BDropdownItem className={'redirect'} onClick={callback_function}>{text}</BDropdownItem>
+);
+
+const mapStateToProps = ({loginReducer: {logged}}) => ({
+  logged,
+});
 
 export const Navbar = compose(
+  connect(
+    mapStateToProps,
+    dispatch => ({
+      logout: () => dispatch(logout())
+    })
+  ),
   withState('toggled', 'setToggle', false),
   withHandlers({
     toggle: ({setToggle, toggled}) => () => setToggle(!toggled),
   }),
-)(({toggle, toggled, ...rest}) => (
+)(({logged, logout, toggle, toggled, ...rest}) => (
   <BNavbar dark expand="md" className={'primary'}>
     <Container>
       <NavbarBrand href="/">eScort-me</NavbarBrand>
@@ -29,18 +46,21 @@ export const Navbar = compose(
       <Collapse isOpen={toggled} navbar>
         <Nav className="ml-auto" navbar>
           <NavItem text={`Accueil`} pathName={`/`} {...rest}/>
-          {
-            isLogged() ?
-              <NavItem text={`Mon compte`} pathName={`/account`} {...rest}/> :
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Connexion
-                </DropdownToggle>
-                <DropdownMenu right>
+          <UncontrolledDropdown nav inNavbar>
+            <DropdownToggle nav caret>
+              {logged ? 'Mon compte' : 'Connexion'}
+            </DropdownToggle>
+            <DropdownMenu right>
+              {
+                logged ?
+                  <Fragment>
+                    <DropdownItem callback_function={() => redirectTo(rest.history, '/profile')} text={`Mon profil`} {...rest} />
+                    <DropdownItem callback_function={() => logout()} text={`Déconnexion`} {...rest} />
+                  </Fragment> :
                   <LoginForm {...rest}/>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-          }
+              }
+            </DropdownMenu>
+          </UncontrolledDropdown>
         </Nav>
       </Collapse>
     </Container>
