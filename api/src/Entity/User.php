@@ -43,7 +43,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(unique=true)
      * @Assert\NotBlank
-     * @Groups({"user_output_default", "user_input_creation", "user_output_profile", "outing_output_one"})
+     * @Groups({"user_output_default", "user_input_creation", "user_output_profile", "outing_output_default", "outing_output_one"})
      */
     private $username;
 

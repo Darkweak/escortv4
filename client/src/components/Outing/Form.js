@@ -17,7 +17,7 @@ const fields = [
     label: 'Numéro de rue',
     type: 'text',
     placeholder: 'Numéro de rue',
-    pattern: '\\d',
+    pattern: '\\d+',
     name: 'numberStreet',
   },
   {
@@ -39,6 +39,12 @@ const fields = [
     placeholder: '75000',
     pattern: '[0-9]{5}',
     name: 'postcode',
+  },
+  {
+    label: 'Ville',
+    type: 'text',
+    placeholder: 'Paris',
+    name: 'city',
   },
   {
     label: 'Pays',

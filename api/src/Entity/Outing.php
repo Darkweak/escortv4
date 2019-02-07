@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ApiResource(
  *     attributes={
+ *         "order"={"id": "DESC"},
  *         "normalization_context"={"groups"={"outing_output_default"}},
  *         "denormalization_context"={"groups"={"outing_input_default"}}
  *     },
@@ -68,6 +69,13 @@ class Outing
     private $complementaryStreet;
 
     /**
+     * @ORM\Column
+     * @Assert\NotBlank
+     * @Groups({"outing_output_default", "outing_input_creation", "outing_output_one"})
+     */
+    private $city;
+
+    /**
      * @ORM\Column(length=5)
      * @Assert\NotBlank
      * @Assert\Regex(pattern="/^[0-9]{5}$/", message="Code postal invalide")
@@ -91,7 +99,7 @@ class Outing
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="outingsOwner")
-     * @Groups({"outing_output_default", "outing_input_creation", "outing_output_one", "user_output_profile"})
+     * @Groups({"outing_output_default", "outing_output_one", "user_output_profile"})
      */
     private $owner;
 
@@ -152,6 +160,17 @@ class Outing
     public function setComplementaryStreet(?string $complementaryStreet): self
     {
         $this->complementaryStreet = $complementaryStreet;
+        return $this;
+    }
+
+    public function getCity(): string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): self
+    {
+        $this->city = $city;
         return $this;
     }
 

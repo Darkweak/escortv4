@@ -5,45 +5,10 @@ import {isLogged} from "../../functions/logged";
 import {Carousel} from "../Carousel";
 import {TextContainer} from "../Layout/TextContainer";
 import {ImageFullHeight} from "../Images";
-
-const items = [
-  {
-    id: 1,
-    title: 'Mon premier',
-    city: 'Reims',
-    country: 'France',
-    date: Date.now(),
-    place: '7 rue de la procession',
-    postcode: '51000',
-    owner: {
-      username: 'Darkweak',
-    }
-  },
-  {
-    id: 2,
-    title: 'Mon deuxième',
-    city: 'Reims',
-    country: 'France',
-    date: Date.now(),
-    place: '7 rue de la procession',
-    postcode: '51000',
-    owner: {
-      username: 'Darkweak',
-    }
-  },
-  {
-    id: 3,
-    title: 'Mon troisième',
-    city: 'Reims',
-    country: 'France',
-    date: Date.now(),
-    place: '7 rue de la procession',
-    postcode: '51000',
-    owner: {
-      username: 'Darkweak',
-    }
-  },
-];
+import {getOutingsList} from "./store/action";
+import {connect} from 'react-redux';
+import {compose, lifecycle} from 'recompose';
+import {DangerAlert, InfoAlert, WarningAlert} from "../Alerts";
 
 const welcomeItems = [
   {
@@ -63,15 +28,53 @@ const welcomeItems = [
   },
 ];
 
-export const Welcome = ({...rest}) => (
+const mapStateToProps = ({
+                           outingsListReducer: {
+                             fetch_outings_error,
+                             is_fetching_outings,
+                             outings_list,
+                           },
+                           outingReducer: {
+                             outing_created_elements
+                           }
+}) => ({
+  fetch_outings_error,
+  is_fetching_outings,
+  outing_created_elements,
+  outings_list,
+});
+
+export const Welcome = compose(
+  connect(
+    mapStateToProps,
+    dispatch => ({
+      getOutingsList: () => dispatch(getOutingsList())
+    })
+  ),
+  lifecycle({
+    componentDidMount() {
+      this.props.getOutingsList();
+    }
+  })
+)(({fetch_outings_error, is_fetching_outings, outing_created_elements, outings_list,...rest}) => (
   <Layout defaultContainer={isLogged()} {...rest}>
     {
       isLogged() ?
-        <OutingList list={items} {...rest}/> :
+        <div className={'pt-4 pb-4'}>
+          {
+            is_fetching_outings ?
+              <InfoAlert content={'Récupération des sorties en cours...'}/> :
+              fetch_outings_error ?
+                <DangerAlert content={'Erreur lors de la récupération des sorties...'}/> :
+                !outings_list.length && !outing_created_elements.length &&
+                <WarningAlert content={'Aucune sortie créée, soyez le premier à en créer une !'}/>
+          }
+          <OutingList list={[...outing_created_elements.reverse(), ...outings_list]} {...rest}/>
+        </div>:
         <WelcomeDefault/>
     }
   </Layout>
-);
+));
 
 const WelcomeDefault = () => (
   <Fragment>

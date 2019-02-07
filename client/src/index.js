@@ -26,6 +26,7 @@ import registerReducer from './components/Register/store/reducer';
 import formReducer from './components/Form/store/reducer';
 import OutingSaga from './sagas/outing';
 import outingReducer from './components/Outing/store/reducer';
+import outingsListReducer from './components/Welcome/store/reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 const history = createBrowserHistory();
@@ -36,6 +37,7 @@ const store = createStore(
     formReducer,
     loginReducer,
     outingReducer,
+    outingsListReducer,
     registerReducer,
   }),
   applyMiddleware(routerMiddleware(history), sagaMiddleware)

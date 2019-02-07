@@ -1,5 +1,6 @@
 import * as actions from './action';
 import {isLogged, loginUser, logoutUser} from "../../../functions/logged";
+import {resetForm} from "../../../functions/serialize";
 
 const initialState = {
   logged: isLogged(),
@@ -24,6 +25,7 @@ export default (state = initialState, {type, payload}) => {
         login_error: true,
       };
     case actions.LOGIN_SUCCESS:
+      resetForm('escort-login');
       loginUser(payload.token);
       redirectToHome();
       break;

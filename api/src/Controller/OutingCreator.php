@@ -35,6 +35,7 @@ class OutingCreator
                 $numberStreet = $content->numberStreet;
                 $street = $content->street;
                 $postcode = $content->postcode;
+                $city = $content->city;
                 $date = \DateTime::createFromFormat('d/m/Y G:i', "{$content->date} {$content->heure}");
             } catch (\Exception $e) {
                 throw new BadRequestHttpException();
@@ -54,6 +55,7 @@ class OutingCreator
                 ->setNumberStreet($numberStreet)
                 ->setCountry('FRANCE')
                 ->setComplementaryStreet($complementaryStreet)
+                ->setCity($city)
                 ->setPostcode($postcode)
                 ->setDate($date)
                 ->setOwner($owner);

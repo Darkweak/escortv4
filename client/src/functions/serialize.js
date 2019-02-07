@@ -6,3 +6,7 @@ export const serializeForm = (elements) => {
   }
   return form;
 };
+
+export const resetForm = (form) => {
+  document.getElementById(form).reset();
+}

@@ -1,9 +1,11 @@
 import * as actions from './action';
+import {resetForm} from "../../../functions/serialize";
 
 const initialState = {
   outing_created: false,
   outing_creation_error: false,
   outing_creation_error_cause: [],
+  outing_created_elements: [],
 };
 
 export default (state = initialState, {payload, type}) => {
@@ -22,11 +24,15 @@ export default (state = initialState, {payload, type}) => {
         outing_creation_error_cause: [],
       };
     case actions.OUTING_CREATE_SUCCESS:
+      let elements = state.outing_created_elements;
+      elements.push(payload);
+      resetForm('escort-outing');
       return {
         ...state,
-        registered: true,
+        outing_created: true,
         outing_creation_error: false,
         outing_creation_error_cause: [],
+        outing_created_elements: [...elements],
       };
     default:
       return state;

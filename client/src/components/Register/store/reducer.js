@@ -1,4 +1,5 @@
 import * as actions from './action';
+import {resetForm} from "../../../functions/serialize";
 
 const initialState = {
   registered: false,
@@ -22,6 +23,7 @@ export default (state = initialState, {payload, type}) => {
         register_error_cause: [],
       };
     case actions.REGISTER_SUCCESS:
+      resetForm('escort-register');
       return {
         ...state,
         registered: true,

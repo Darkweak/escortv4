@@ -41,12 +41,12 @@ export const OutingList = compose(
         list && list.map((item, index) => (
           <Col key={index} xs={12} md={6} className={'p-1'}>
             <Card key={index} className={'b-secondary'}>
-              <CardHeader className={'text-center secondary text-white'}>{item.title}</CardHeader>
+              <CardHeader className={'text-center secondary text-white'}>{item.name}</CardHeader>
               <CardHeader className={'text-center reverse'}>créé par {item.owner.username}</CardHeader>
               <CardBody>
                 <Row className={'justify-content-between ml-0 mr-0 mt-1 mb-1'}>
                   <div className={'d-flex'}>
-                    <CardText><FontAwesomeIcon icon="map-marker-alt" />{` ${item.place}`}</CardText>
+                    <CardText><FontAwesomeIcon icon="map-marker-alt" />{` ${item.numberStreet} ${item.street}`}</CardText>
                   </div>
                   <div>
                     <CardText>{item.city}</CardText>
