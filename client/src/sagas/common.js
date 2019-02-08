@@ -1,6 +1,24 @@
 import {put} from 'redux-saga/effects';
 import {serializeForm} from "../functions/serialize";
 import {getUser} from "../functions/logged";
+import {LOGOUT} from "../components/Login/store/action";
+
+function* handleResponse(response) {
+  switch (response.code) {
+    case 401:
+      switch (response.message) {
+        case 'Expired JWT Token':
+          return yield put({
+            type: LOGOUT
+          });
+        default:
+          break;
+      }
+      break;
+    default:
+      break;
+  }
+}
 
 export function* commonRequest(pathname, method, callback_events, body = null, is_list = false) {
   try {
@@ -22,6 +40,7 @@ export function* commonRequest(pathname, method, callback_events, body = null, i
         errored = true;
       return response.json();
     });
+    yield handleResponse(response);
     yield put({
       type: errored ? callback_events.error : callback_events.success,
       payload: is_list ? response["hydra:member"] : response,

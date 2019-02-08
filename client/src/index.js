@@ -17,6 +17,7 @@ import * as serviceWorker from './serviceWorker';
 import {Welcome} from "./components/Welcome/Welcome";
 import {Login} from "./components/Login";
 import {Register} from "./components/Register";
+import {Profile} from "./components/User";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCalendarAlt, faEye, faMapMarkerAlt, faPlus, faQuestionCircle, faUsers, faUserShield } from '@fortawesome/free-solid-svg-icons';
 import LoginSaga from './sagas/login';
@@ -26,6 +27,8 @@ import registerReducer from './components/Register/store/reducer';
 import formReducer from './components/Form/store/reducer';
 import OutingSaga from './sagas/outing';
 import outingReducer from './components/Outing/store/reducer';
+import UserSaga from './sagas/user';
+import userReducer from './components/User/store/reducer';
 import outingsListReducer from './components/Welcome/store/reducer';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -39,6 +42,7 @@ const store = createStore(
     outingReducer,
     outingsListReducer,
     registerReducer,
+    userReducer,
   }),
   applyMiddleware(routerMiddleware(history), sagaMiddleware)
 );
@@ -47,6 +51,7 @@ const sagas = [
   LoginSaga,
   OutingSaga,
   RegisterSaga,
+  UserSaga,
 ];
 
 sagas.map(saga => sagaMiddleware.run(saga));
@@ -68,6 +73,7 @@ ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Switch>
+        <Route path="/profile" component={Profile} strict exact/>
         <Route path="/login" component={Login} strict exact/>
         <Route path="/register" component={Register} strict exact/>
         <Route path="/" component={Welcome} strict exact/>

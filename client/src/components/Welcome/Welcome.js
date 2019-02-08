@@ -5,10 +5,6 @@ import {isLogged} from "../../functions/logged";
 import {Carousel} from "../Carousel";
 import {TextContainer} from "../Layout/TextContainer";
 import {ImageFullHeight} from "../Images";
-import {getOutingsList} from "./store/action";
-import {connect} from 'react-redux';
-import {compose, lifecycle} from 'recompose';
-import {DangerAlert, InfoAlert, WarningAlert} from "../Alerts";
 
 const welcomeItems = [
   {
@@ -28,53 +24,17 @@ const welcomeItems = [
   },
 ];
 
-const mapStateToProps = ({
-                           outingsListReducer: {
-                             fetch_outings_error,
-                             is_fetching_outings,
-                             outings_list,
-                           },
-                           outingReducer: {
-                             outing_created_elements
-                           }
-}) => ({
-  fetch_outings_error,
-  is_fetching_outings,
-  outing_created_elements,
-  outings_list,
-});
-
-export const Welcome = compose(
-  connect(
-    mapStateToProps,
-    dispatch => ({
-      getOutingsList: () => dispatch(getOutingsList())
-    })
-  ),
-  lifecycle({
-    componentDidMount() {
-      this.props.getOutingsList();
-    }
-  })
-)(({fetch_outings_error, is_fetching_outings, outing_created_elements, outings_list,...rest}) => (
+export const Welcome = ({fetch_outings_error, is_fetching_outings, outing_created_elements, outings_list,...rest}) => (
   <Layout defaultContainer={isLogged()} {...rest}>
     {
       isLogged() ?
         <div className={'pt-4 pb-4'}>
-          {
-            is_fetching_outings ?
-              <InfoAlert content={'Récupération des sorties en cours...'}/> :
-              fetch_outings_error ?
-                <DangerAlert content={'Erreur lors de la récupération des sorties...'}/> :
-                !outings_list.length && !outing_created_elements.length &&
-                <WarningAlert content={'Aucune sortie créée, soyez le premier à en créer une !'}/>
-          }
-          <OutingList list={[...outing_created_elements.reverse(), ...outings_list]} {...rest}/>
+          <OutingList {...rest}/>
         </div>:
         <WelcomeDefault/>
     }
   </Layout>
-));
+);
 
 const WelcomeDefault = () => (
   <Fragment>

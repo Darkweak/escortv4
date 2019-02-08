@@ -19,7 +19,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     },
  *     collectionOperations={
  *         "get"={"access_control"="is_granted('ROLE_USER')"},
- *         "post"={"denormalization_context"={"groups"={"user_input_creation"}}}
+ *         "post"={"denormalization_context"={"groups"={"user_input_creation"}}},
+ *         "get_profile"={
+ *             "method"="GET",
+ *             "path"="/profile",
+ *             "controller"=App\Controller\Profile::class,
+ *             "normalization_context"={"groups"={"user_output_profile"}},
+ *         }
  *     },
  *     itemOperations={
  *         "get"={"access_control"="(is_granted('ROLE_USER') and object == user)", "normalization_context"={"groups"={"user_output_profile"}}},
