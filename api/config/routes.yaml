@@ -4,3 +4,8 @@
 
 login:
     path: /login
+
+participate:
+    path: /participate
+    methods: [POST]
+    controller: App\Controller\Participate

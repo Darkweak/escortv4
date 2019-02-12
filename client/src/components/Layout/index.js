@@ -11,7 +11,7 @@ export const Layout = ({children, defaultContainer, ...rest}) => (
     <div className={'body-container'}>
       {
         defaultContainer ?
-          <Container className={'pt-1 pb-1'}>
+          <Container>
             {children}
           </Container> :
           children

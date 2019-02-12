@@ -19,7 +19,8 @@ import {Login} from "./components/Login";
 import {Register} from "./components/Register";
 import {Profile} from "./components/User";
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCalendarAlt, faEye, faMapMarkerAlt, faPlus, faQuestionCircle, faUsers, faUserShield } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt, faEye, faFileAlt, faMapMarkerAlt, faMoneyBillAlt, faPlus, faQuestionCircle, faUser, faUserClock, faUsers, faUserShield } from '@fortawesome/free-solid-svg-icons';
+import {OutingShow} from "./components/Outing/Show";
 import LoginSaga from './sagas/login';
 import loginReducer from './components/Login/store/reducer';
 import RegisterSaga from './sagas/register';
@@ -59,9 +60,13 @@ sagas.map(saga => sagaMiddleware.run(saga));
 const faIcons = [
   faCalendarAlt,
   faEye,
+  faFileAlt,
   faMapMarkerAlt,
+  faMoneyBillAlt,
   faPlus,
   faQuestionCircle,
+  faUser,
+  faUserClock,
   faUsers,
   faUserShield,
 ];
@@ -73,6 +78,7 @@ ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Switch>
+        <Route path="/outings/:id" component={OutingShow} strict exact/>
         <Route path="/profile" component={Profile} strict exact/>
         <Route path="/login" component={Login} strict exact/>
         <Route path="/register" component={Register} strict exact/>

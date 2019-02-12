@@ -10,15 +10,15 @@ function* handleUser(action) {
   const {payload, type} = action;
   switch (type) {
     case RETRIEVE_PROFILE_REQUEST:
-      yield commonRequest(
-        '/profile',
-        'GET',
-        {
+      yield commonRequest({
+        pathname: '/profile',
+        method: 'GET',
+        callback_events: {
           success: RETRIEVE_PROFILE_SUCCESS,
           error: RETRIEVE_PROFILE_FAILED,
         },
-        payload,
-      );
+        body: payload,
+      });
       break;
     default:
       break;

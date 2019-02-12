@@ -1,6 +1,6 @@
 import {put} from 'redux-saga/effects';
 import {serializeForm} from "../functions/serialize";
-import {getUser} from "../functions/logged";
+import {getToken, isLogged} from "../functions/logged";
 import {LOGOUT} from "../components/Login/store/action";
 
 function* handleResponse(response) {
@@ -20,13 +20,14 @@ function* handleResponse(response) {
   }
 }
 
-export function* commonRequest(pathname, method, callback_events, body = null, is_list = false) {
+export function* commonRequest(item) {
   try {
     let errored = false;
+    const {pathname, method, callback_events, body, is_list} = item;
     const contentHeaders = new Headers();
     contentHeaders.append('Accept', 'application/ld+json');
     contentHeaders.append('Content-Type', 'application/ld+json');
-    contentHeaders.append('Authorization', `Bearer ${getUser()}`)
+    isLogged() && contentHeaders.append('Authorization', `Bearer ${getToken()}`);
     const request = new Request(
       `${process.env.REACT_APP_API_ENTRYPOINT}${pathname}`,
       {

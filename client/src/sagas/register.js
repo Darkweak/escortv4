@@ -10,15 +10,15 @@ function* handleRegister(action) {
   const {payload, type} = action;
   switch (type) {
     case REGISTER_REQUEST:
-      yield commonRequest(
-        '/users',
-        'POST',
-        {
+      yield commonRequest({
+        pathname: '/users',
+        method: 'POST',
+        callback_events: {
           success: REGISTER_SUCCESS,
           error: REGISTER_FAILED,
         },
-        payload,
-      );
+        body: payload,
+      });
       break;
     default:
       break;

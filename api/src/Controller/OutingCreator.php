@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use GuzzleHttp\Client;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -32,13 +32,29 @@ class OutingCreator
 
             try {
                 $name = $content->name;
-                $numberStreet = $content->numberStreet;
                 $street = $content->street;
                 $postcode = $content->postcode;
                 $city = $content->city;
                 $date = \DateTime::createFromFormat('d/m/Y G:i', "{$content->date} {$content->heure}");
             } catch (\Exception $e) {
                 throw new BadRequestHttpException();
+            }
+
+            try {
+                $fetch_positions = (new Client())->request(
+                    Request::METHOD_GET,
+                    "https://nominatim.openstreetmap.org/search?format=json&street={$street}&city={$city}&country=FRANCE&postalcode={$postcode}"
+                );
+                $result = json_decode($fetch_positions->getBody())[0];
+                $position = [$result->lat, $result->lon];
+            }catch (\Exception $e) {
+                $position = [];
+            }
+
+            try {
+                $description = $content->description;
+            }catch (\Exception $e) {
+                $description = '';
             }
 
             try {
@@ -52,13 +68,16 @@ class OutingCreator
             $outing
                 ->setName($name)
                 ->setStreet($street)
-                ->setNumberStreet($numberStreet)
                 ->setCountry('FRANCE')
                 ->setComplementaryStreet($complementaryStreet)
                 ->setCity($city)
                 ->setPostcode($postcode)
                 ->setDate($date)
-                ->setOwner($owner);
+                ->setCreated(new \DateTime())
+                ->setUpdated(new \DateTime())
+                ->setOwner($owner)
+                ->setDescription($description)
+                ->setPosition($position);
 
             $this->entityManager->persist($outing);
             $this->entityManager->flush();

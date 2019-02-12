@@ -53,7 +53,7 @@ export const OutingList = compose(
   withHandlers({
     toggle: ({setToggle, toggled}) => () => setToggle(!toggled)
   })
-)(({fetch_outings_error, history, is_fetching_outings, list, outing_created_elements, outings_list, toggle, toggled, setToggle, ...rest}) => (
+)(({fetch_outings_error, history, is_fetching_outings, outing_created_elements, outings_list, toggle, toggled, setToggle, ...rest}) => (
   <Fragment>
     <Row className={'m-0 pt-3 pb-3'}>
       <Button className={'primary white-text'} onClick={toggle}>
@@ -77,7 +77,7 @@ export const OutingList = compose(
     <Row>
       {
         outings_list && outings_list.length ?
-          outings_list.map((item, index) => (
+          [...outing_created_elements.reverse(), ...outings_list].map((item, index) => (
             <Col key={index} xs={12} md={6} className={'p-1'}>
               <Card key={index} className={'b-secondary'}>
                 <CardHeader className={'text-center secondary text-white'}>{item.name}</CardHeader>
@@ -88,12 +88,14 @@ export const OutingList = compose(
                       <CardText><FontAwesomeIcon icon="map-marker-alt" />{` ${item.numberStreet} ${item.street}`}</CardText>
                     </div>
                     <div>
-                      <CardText>{item.city}</CardText>
+                      <CardText>{`${item.postcode} ${item.city}`}</CardText>
                     </div>
                   </Row>
                   <CardText><FontAwesomeIcon icon="calendar-alt" />{` ${transformDate(item.date)}`}</CardText>
                   <div className={'text-center'}>
-                    <Button className={'primary white-text'} onClick={() => redirectTo(history, `/outing/${item['@id']}`)}><FontAwesomeIcon icon="eye" /> Voir l'annonce</Button>
+                    <Button className={'primary white-text'} onClick={() => redirectTo(history, `${item['@id']}`)}>
+                      <FontAwesomeIcon icon="eye" /> Voir l'annonce
+                    </Button>
                   </div>
                 </CardBody>
               </Card>

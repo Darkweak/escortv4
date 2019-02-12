@@ -14,16 +14,9 @@ const fields = [
     name: 'name',
   },
   {
-    label: 'Numéro de rue',
+    label: 'Adresse',
     type: 'text',
-    placeholder: 'Numéro de rue',
-    pattern: '\\d+',
-    name: 'numberStreet',
-  },
-  {
-    label: 'Nom de la rue',
-    type: 'text',
-    placeholder: 'Nom de la rue',
+    placeholder: '7 rue Achille',
     name: 'street',
   },
   {
@@ -36,7 +29,7 @@ const fields = [
   {
     label: 'code postal',
     type: 'text',
-    placeholder: '75000',
+    placeholder: '75020',
     pattern: '[0-9]{5}',
     name: 'postcode',
   },

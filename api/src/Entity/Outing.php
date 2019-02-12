@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -12,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ApiResource(
  *     attributes={
- *         "order"={"id": "DESC"},
+ *         "order"={"created": "DESC"},
  *         "normalization_context"={"groups"={"outing_output_default"}},
  *         "denormalization_context"={"groups"={"outing_input_default"}}
  *     },
@@ -26,7 +27,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *         }
  *     },
  *     itemOperations={
- *         "get"={"access_control"="(is_granted('ROLE_USER') and object.getOwner() == user)", "normalization_context"={"groups"={"outing_output_one"}}},
+ *         "get"={"access_control"="is_granted('ROLE_USER')", "normalization_context"={"groups"={"outing_output_one"}}},
  *         "delete"={"access_control"="(is_granted('ROLE_USER') and object.getOwner() == user)"}
  *     }
  * )
@@ -36,8 +37,8 @@ class Outing
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(type="guid")
      */
     private $id;
 
@@ -49,11 +50,10 @@ class Outing
     private $name;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Assert\NotBlank
-     * @Groups({"outing_output_default", "outing_input_creation", "outing_output_one"})
+     * @ORM\Column(type="text")
+     * @Groups({"outing_output_one"})
      */
-    private $numberStreet;
+    private $description;
 
     /**
      * @ORM\Column
@@ -98,6 +98,12 @@ class Outing
     private $date;
 
     /**
+     * @ORM\Column(type="array")
+     * @Groups({"outing_output_default", "outing_output_one"})
+     */
+    private $position;
+
+    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="outingsOwner")
      * @Groups({"outing_output_default", "outing_output_one", "user_output_profile"})
      */
@@ -109,12 +115,26 @@ class Outing
      */
     private $participants;
 
+    /**
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     * @Groups({"outing_output_one"})
+     */
+    private $created;
+
+    /**
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+     * @Groups({"outing_output_one"})
+     */
+    private $updated;
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
     }
 
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
     }
@@ -130,14 +150,14 @@ class Outing
         return $this;
     }
 
-    public function getNumberStreet(): string
+    public function getDescription(): ?string
     {
-        return $this->numberStreet;
+        return $this->description;
     }
 
-    public function setNumberStreet(string $numberStreet): self
+    public function setDescription(?string $description): self
     {
-        $this->numberStreet = $numberStreet;
+        $this->description = $description;
         return $this;
     }
 
@@ -207,6 +227,17 @@ class Outing
         return $this;
     }
 
+    public function getPosition(): array
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?array $position): self
+    {
+        $this->position = $position;
+        return $this;
+    }
+
     public function getOwner(): User
     {
         return $this->owner;
@@ -240,6 +271,28 @@ class Outing
     public function removeParticipant(UserOuting $participants): self
     {
         $this->participants->remove($participants);
+        return $this;
+    }
+
+    public function getCreated(): \DateTime
+    {
+        return $this->created;
+    }
+
+    public function setCreated(\DateTime $created): self
+    {
+        $this->created = $created;
+        return $this;
+    }
+
+    public function getUpdated(): \DateTime
+    {
+        return $this->updated;
+    }
+
+    public function setUpdated(\DateTime $updated): self
+    {
+        $this->updated = $updated;
         return $this;
     }
 

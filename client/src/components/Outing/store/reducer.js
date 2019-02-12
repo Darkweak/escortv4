@@ -6,6 +6,10 @@ const initialState = {
   outing_creation_error: false,
   outing_creation_error_cause: [],
   outing_created_elements: [],
+
+  outing: null,
+  is_fetching_outing: false,
+  outing_fetch_error: false,
 };
 
 export default (state = initialState, {payload, type}) => {
@@ -33,6 +37,27 @@ export default (state = initialState, {payload, type}) => {
         outing_creation_error: false,
         outing_creation_error_cause: [],
         outing_created_elements: [...elements],
+      };
+    case actions.OUTING_SHOW_FAILED:
+      return {
+        ...state,
+        outing: null,
+        is_fetching_outing: false,
+        fetch_outings_error: true,
+      };
+    case actions.OUTING_SHOW_REQUEST:
+      return {
+        ...state,
+        outing: null,
+        is_fetching_outing: true,
+        fetch_outings_error: false,
+      };
+    case actions.OUTING_SHOW_SUCCESS:
+      return {
+        ...state,
+        outing: payload,
+        is_fetching_outing: false,
+        fetch_outings_error: false,
       };
     default:
       return state;

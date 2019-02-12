@@ -20,7 +20,12 @@ const welcomeItems = [
   {
     icon: 'users',
     title: `Envie de rencontrer du monde ?`,
-    description: `Il ne vous reste plus qu'à nous rejoindre et poster ou rejoindre une sortie pour commencer l'aventure.`,
+    description: `Rien de plus simple, il suffit de s'inscrire pour accéder aux sorties disponibles près de chez vous. Il ne vous reste plus qu'à nous rejoindre et poster ou rejoindre une sortie pour commencer l'aventure.`,
+  },
+  {
+    icon: 'money-bill-alt',
+    title: `Investissez et obtenez des royalties`,
+    description: `Faites des dons pour soutenir le projet, en échange vous obtenez un pourcentage de parts dans l'entreprise en fonction du total donné par tous les contributeurs. Plus vous donnez, plus vous obtenez de pourcentage de parts.`,
   },
 ];
 

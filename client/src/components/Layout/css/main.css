@@ -2,6 +2,11 @@
     background-color: #662D91 !important;
 }
 
+.color-primary {
+    color: #662D91 !important;
+    font-weight: bolder;
+}
+
 .primary-container {
     background-color: #662D91;
     color: #BFBFBF;
@@ -85,7 +90,7 @@ body {
     font-weight: lighter;
 }
 
-.navbar-brand {
+.navbar-brand, .fs-140 {
     font-size: 140%;
 }
 
@@ -126,4 +131,12 @@ body {
 
 .b-ws {
     background-color: whitesmoke;
+}
+
+.bg-title_outing {
+    background-color: #23022E;
+}
+
+.no-style {
+    list-style: none;
 }

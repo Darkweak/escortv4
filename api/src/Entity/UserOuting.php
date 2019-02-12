@@ -9,9 +9,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ApiResource(
  *     collectionOperations={
+ *         "get"={"access_control"="is_granted('ROLE_ADMIN')", "normalization_context"={"groups"={"user_outing_output_admin"}}},
  *         "post"={"access_control"="(is_granted('ROLE_USER') and object.owner == user)", "denormalization_context"={"groups"={"user_outing_input_creation"}}}
  *     },
  *     itemOperations={
+ *         "get"={"access_control"="is_granted('ROLE_ADMIN')", "normalization_context"={"groups"={"user_outing_output_admin"}}},
  *         "delete"={"access_control"="(is_granted('ROLE_USER') and object.getParticipateBy() == user)"}
  *     }
  * )
@@ -28,13 +30,13 @@ class UserOuting
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="outingsParticipate")
-     * @Groups({"outing_output_one"})
+     * @Groups({"user_outing_output_admin", "outing_output_one"})
      */
     private $participateBy;
 
     /**
      * @ORM\ManyToOne(targetEntity="Outing", inversedBy="participants")
-     * @Groups({"user_output_profile"})
+     * @Groups({"user_outing_output_admin", "user_output_profile"})
      */
     private $participateTo;
 

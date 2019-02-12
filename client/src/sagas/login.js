@@ -10,15 +10,15 @@ function* handleLogin(action) {
   const {payload, type} = action;
   switch (type) {
     case LOGIN_REQUEST:
-      yield commonRequest(
-        '/login',
-        'POST',
-        {
+      yield commonRequest({
+        pathname: '/login',
+        method: 'POST',
+        callback_events: {
           success: LOGIN_SUCCESS,
           error: LOGIN_FAILED,
         },
-        payload,
-      );
+        body: payload,
+      });
       break;
     default:
       break;
