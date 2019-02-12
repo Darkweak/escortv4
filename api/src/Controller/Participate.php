@@ -36,7 +36,7 @@ class Participate
             throw new BadRequestHttpException();
         }
 
-        $outing_participate = $em->getRepository(UserOuting::class)->findBy([
+        $outing_participate = $em->getRepository(UserOuting::class)->findOneBy([
             'participateBy' => $user,
             'participateTo' => $outing,
         ]);

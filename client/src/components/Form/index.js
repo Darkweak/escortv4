@@ -10,6 +10,7 @@ import {
 } from 'reactstrap';
 import {slugify} from "../../functions/slugify";
 import {redirectTo} from "../../functions/redirect";
+import {Loader} from "../Layout/Loader";
 
 const mapStateToProps = ({formReducer: {is_fetching}}) => ({
   is_fetching,
@@ -41,7 +42,7 @@ export const Form = connect(
       ))
     }
     <Container className={'text-center'}>
-      <Button type={'submit'} className={'primary'} disabled={is_fetching}>Submit</Button>
+      <Button type={'submit'} className={'primary'} disabled={is_fetching}>{is_fetching ? <Loader/> : 'Valider'}</Button>
     </Container>
     {
       redirect && (

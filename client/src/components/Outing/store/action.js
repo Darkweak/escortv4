@@ -7,6 +7,7 @@ export const OUTING_SHOW_SUCCESS = 'OUTING_SHOW_SUCCESS';
 export const OUTING_PARTICIPATE_FAILED = 'OUTING_PARTICIPATE_FAILED';
 export const OUTING_PARTICIPATE_REQUEST = 'OUTING_PARTICIPATE_REQUEST';
 export const OUTING_PARTICIPATE_SUCCESS = 'OUTING_PARTICIPATE_SUCCESS';
+export const OUTING_PARTICIPATE_DETECT = 'OUTING_PARTICIPATE_DETECT';
 
 export const createOuting = data => ({
   type: OUTING_CREATE_REQUEST,
@@ -20,5 +21,10 @@ export const retrieveOuting = data => ({
 
 export const applyToParticipate = data => ({
   type: OUTING_PARTICIPATE_REQUEST,
+  payload: data,
+});
+
+export const detectParticipate = data => ({
+  type: OUTING_PARTICIPATE_DETECT,
   payload: data,
 });

@@ -85,7 +85,7 @@ export const OutingList = compose(
                 <CardBody>
                   <Row className={'justify-content-between ml-0 mr-0 mt-1 mb-1'}>
                     <div className={'d-flex'}>
-                      <CardText><FontAwesomeIcon icon="map-marker-alt" />{` ${item.numberStreet} ${item.street}`}</CardText>
+                      <CardText><FontAwesomeIcon icon="map-marker-alt" />{` ${item.street}`}</CardText>
                     </div>
                     <div>
                       <CardText>{`${item.postcode} ${item.city}`}</CardText>

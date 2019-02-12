@@ -11,7 +11,7 @@ export const Map = ({
   center_position,
   markers = [],
 }) => (
-  <BMap center={center_position} minZoom={8} zoom={15} height={400}>
+  <BMap center={center_position} minZoom={8} zoom={17} height={400}>
     {
       markers && markers.length && markers.map((marker, index) => (
         <Marker key={index} anchor={marker.position} payload={1} />

@@ -1,13 +1,12 @@
 import React, {Fragment} from 'react';
-import {compose, lifecycle, withHandlers, withState} from 'recompose';
+import {compose, lifecycle} from 'recompose';
 import '../Layout/css/main.css';
-import {applyToParticipate, retrieveOuting} from "./store/action";
+import {retrieveOuting} from "./store/action";
 import {connect} from "react-redux";
 import {Layout} from "../Layout";
 import {TextContainer} from "../Layout/TextContainer";
-import {DangerAlert, InfoAlert} from "../Alerts";
+import {DangerAlert, InfoAlert, SuccessAlert, WarningAlert} from "../Alerts";
 import {
-  Button,
   Col,
   Container,
   Row
@@ -16,7 +15,7 @@ import {transformDate} from "../../functions/date";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {ShowMap} from "../Map";
 import {getUsername} from "../../functions/logged";
-import {isAlreadyParticipate} from "../../functions/participate";
+import {ButtonHandleParticipate} from "./HandleParticipate";
 
 const mapStateToProps = ({
   formReducer: {
@@ -24,6 +23,7 @@ const mapStateToProps = ({
   },
   outingReducer: {
     outing,
+    outing_participate,
     is_fetching_outing,
     outing_fetch_error,
   }
@@ -32,19 +32,28 @@ const mapStateToProps = ({
   outing,
   is_fetching_outing,
   outing_fetch_error,
+  outing_participate,
 });
 
 const generateTableParticipants = (list) => {
   let participants = [];
-  list.length && list.map(item => participants.push(getUsername() === item.participateBy.username ? 'Vous' : item.participateBy.username));
+  list.length && list.map(item => (getUsername() !== item.participateBy.username && participants.push(item.participateBy.username)));
   return participants;
+};
+
+const isParticipant = (list) => {
+  for (let i = 0; i < list.length; i++) {
+    if (getUsername() === list[i].participateBy.username) {
+      return true
+    }
+  }
+  return false;
 };
 
 export const OutingShow = compose(
   connect(
     mapStateToProps,
     dispatch => ({
-      applyToParticipate: (...args) => dispatch(applyToParticipate(...args)),
       retrieveOuting: (...args) => dispatch(retrieveOuting(...args)),
     })
   ),
@@ -53,7 +62,7 @@ export const OutingShow = compose(
       this.props.retrieveOuting(this.props.match.params.id);
     }
   })
-)(({applyToParticipate, is_fetching, is_fetching_outing, match: {params}, outing, outing_fetch_error, ...rest}) => (
+)(({is_fetching, is_fetching_outing, match: {params}, outing, outing_fetch_error, outing_participate, ...rest}) => (
   <Layout {...rest}>
     {
       is_fetching_outing ?
@@ -63,7 +72,18 @@ export const OutingShow = compose(
         outing ?
           <Fragment>
             <TextContainer className={'bg-title_outing'} content={{title: outing.name}}/>
-            <Container className={'fs-140 pt-2 pb-2'}>
+            <Container>
+              {
+                outing.description &&
+                <div className={'pt-3 pb-3'}>
+                  <span><FontAwesomeIcon icon="file-alt" /> {outing.description}</span>
+                </div>
+              }
+            </Container>
+            <Container className={'fs-140 pt-3 pb-3'}>
+              {
+                outing_participate && <SuccessAlert content={'Vous participez à cette sortie'}/>
+              }
               <Row>
                 <Col xs={{size: 12, order: 2}} md={{size: 8, order: 1}}>
                   <p>
@@ -75,22 +95,22 @@ export const OutingShow = compose(
                       <FontAwesomeIcon icon="map-marker-alt" />{` ${outing.complementaryStreet}`}
                     </p>
                   }
-                  {
-                    outing.description &&
-                    <div className={'pt-3 pb-3'}>
-                      <span><FontAwesomeIcon icon="file-alt" /> Ils participent aussi :</span>
-                      <Container>
-                        <Row>
-                          {generateTableParticipants(outing.participants).map((item, index) => <Col xs={12} md={6} key={index}>{item}</Col>)}
-                        </Row>
-                      </Container>
-                    </div>
-                  }
                   <div className={'pt-3 pb-3'}>
                     <span><FontAwesomeIcon icon="users" /> Ils participent aussi :</span>
                     <Container>
                       <Row>
-                        {generateTableParticipants(outing.participants).map((item, index) => <Col xs={12} md={6} key={index}>{item}</Col>)}
+                        {
+                          !outing_participate && generateTableParticipants(outing.participants).length === 0 ?
+                            <WarningAlert content={'Aucun inscrit pour le moment'}/> :
+                            <Fragment>
+                              {
+                                outing_participate && <Col xs={12} md={6}>Vous</Col>
+                              }
+                              {
+                                generateTableParticipants(outing.participants).map((item, index) => <Col xs={12} md={6} key={index}>{item}</Col>)
+                              }
+                            </Fragment>
+                        }
                       </Row>
                     </Container>
                   </div>
@@ -103,16 +123,9 @@ export const OutingShow = compose(
                     <FontAwesomeIcon icon="user-clock" /> Le {transformDate(outing.created)}
                   </p>
                   <p>
-                    <FontAwesomeIcon icon="users" /> {outing.nbParticipants} participants
+                    <FontAwesomeIcon icon="users" /> {generateTableParticipants(outing.participants).length + (outing_participate ? 1 : 0)} participants
                   </p>
-                  <div className={'pt-2 pb-2 text-center'}>
-                    <Button
-                      className={'primary'}
-                      disabled={is_fetching}
-                      onClick={() => applyToParticipate({outing: params.id, value: true})}>
-                      <h3>{isAlreadyParticipate(generateTableParticipants(outing.participants)) ? `Je n'y vais plus` : `J'y participe`}</h3>
-                    </Button>
-                  </div>
+                  <ButtonHandleParticipate participate={isParticipant(outing.participants)} id={params.id}/>
                 </Col>
               </Row>
             </Container>

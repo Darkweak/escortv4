@@ -30,7 +30,7 @@
 }
 
 #root {
-    background-color: #BFBFBF;
+    background-color: whitesmoke;
     display: flex;
     min-height: 100vh;
     flex-direction: column;
