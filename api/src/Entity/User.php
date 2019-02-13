@@ -9,12 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
  *     attributes={
- *         "normalization_context"={"groups"={"user_output_default"}},
+ *         "normalization_context"={"groups"={"user_output_default"}, "enable_max_depth"="true"},
  *         "denormalization_context"={"groups"={"user_input_default"}}
  *     },
  *     collectionOperations={
@@ -80,18 +81,28 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="Outing", mappedBy="owner")
+     * @Groups({"user_output_profile"})
+     * @MaxDepth(1)
      */
     private $outingsOwner;
 
     /**
      * @ORM\OneToMany(targetEntity="UserOuting", mappedBy="participateBy")
+     * @Groups({"user_output_profile"})
+     * @MaxDepth(1)
      */
     private $outingsParticipate;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="owner")
+     */
+    private $comments;
 
     public function __construct()
     {
         $this->outingsOwner = new ArrayCollection();
         $this->outingsParticipate = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): int
@@ -172,11 +183,40 @@ class User implements UserInterface
     }
 
     public function addOutingsOwner(Outing $outingsOwner) {
-
+        if (!$this->outingsOwner->contains($outingsOwner)) {
+            $this->outingsOwner->add($outingsOwner);
+        }
+        return $this;
     }
 
     public function removeOutingsOwner(Outing $outingsOwner) {
+        $this->outingsOwner->remove($outingsOwner);
+        return $this;
+    }
 
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function setComments(Collection $comments): self
+    {
+        $this->comments = $comments;
+        return $this;
+    }
+
+    public function addComment(Comment $comments): self
+    {
+        if (!$this->comments->contains($comments)) {
+            $this->comments->add($comments);
+        }
+        return $this;
+    }
+
+    public function removeComment(Comment $comments): self
+    {
+        $this->comments->remove($comments);
+        return $this;
     }
 
     public function getOutingsParticipate(): Collection

@@ -129,7 +129,7 @@ export const OutingShow = compose(
                 </Col>
               </Row>
             </Container>
-            <ShowMap outing={{position: outing.position}}/>
+            <ShowMap outing={{position: [outing.lat, outing.long]}}/>
           </Fragment> :
           <Container className={'pt-4 pb-4'}>
             <DangerAlert content={'La sortie sélectionnée n\'existe pas !'}/>

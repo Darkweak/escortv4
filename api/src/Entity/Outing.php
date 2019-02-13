@@ -19,6 +19,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     },
  *     collectionOperations={
  *         "get"={"access_control"="is_granted('ROLE_USER')"},
+ *         "fetch_around_me"={
+ *             "method"="POST",
+ *             "path"="/around_me",
+ *             "controller"=App\Controller\SearchAround::class,
+ *             "normalization_context"={"groups"={"outing_output_default"}},
+ *         },
  *         "post_outing_create"={
  *             "method"="POST",
  *             "path"="/outings",
@@ -31,7 +37,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *         "delete"={"access_control"="(is_granted('ROLE_USER') and object.getOwner() == user)"}
  *     }
  * )
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\OutingRepository")
  */
 class Outing
 {
@@ -98,14 +104,20 @@ class Outing
     private $date;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="float", nullable=true)
      * @Groups({"outing_output_default", "outing_output_one"})
      */
-    private $position;
+    private $lat;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     * @Groups({"outing_output_default", "outing_output_one"})
+     */
+    private $long;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="outingsOwner")
-     * @Groups({"outing_output_default", "outing_output_one", "user_output_profile"})
+     * @Groups({"outing_output_default", "outing_output_one"})
      */
     private $owner;
 
@@ -114,6 +126,12 @@ class Outing
      * @Groups({"outing_output_one"})
      */
     private $participants;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="outing")
+     * @Groups({"outing_output_one"})
+     */
+    private $comments;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -132,6 +150,7 @@ class Outing
     public function __construct()
     {
         $this->participants = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): string
@@ -227,14 +246,25 @@ class Outing
         return $this;
     }
 
-    public function getPosition(): array
+    public function getLat(): ?float
     {
-        return $this->position;
+        return $this->lat;
     }
 
-    public function setPosition(?array $position): self
+    public function setLat(?float $lat): self
     {
-        $this->position = $position;
+        $this->lat = $lat;
+        return $this;
+    }
+
+    public function getLong(): ?float
+    {
+        return $this->long;
+    }
+
+    public function setLong(?float $long): self
+    {
+        $this->long = $long;
         return $this;
     }
 
@@ -274,6 +304,31 @@ class Outing
         return $this;
     }
 
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function setComments(Collection $comments): self
+    {
+        $this->comments = $comments;
+        return $this;
+    }
+
+    public function addComment(Comment $comments): self
+    {
+        if (!$this->comments->contains($comments)) {
+            $this->comments->add($comments);
+        }
+        return $this;
+    }
+
+    public function removeComment(Comment $comments): self
+    {
+        $this->comments->remove($comments);
+        return $this;
+    }
+
     public function getCreated(): \DateTime
     {
         return $this->created;
@@ -297,7 +352,7 @@ class Outing
     }
 
     /**
-     * @Groups({"outing_output_default", "outing_output_one", "user_output_profile"})
+     * @Groups({"outing_output_default", "outing_output_one"})
      */
     public function getNbParticipants(): int
     {

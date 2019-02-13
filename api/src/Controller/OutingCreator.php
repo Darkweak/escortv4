@@ -30,6 +30,8 @@ class OutingCreator
         if ($owner instanceof User && $this->checker->isGranted('ROLE_USER')) {
             $content = json_decode($request->getContent());
 
+            $long = $lat = null;
+
             try {
                 $name = $content->name;
                 $street = $content->street;
@@ -46,10 +48,9 @@ class OutingCreator
                     "https://nominatim.openstreetmap.org/search?format=json&street={$street}&city={$city}&country=FRANCE&postalcode={$postcode}"
                 );
                 $result = json_decode($fetch_positions->getBody())[0];
-                $position = [$result->lat, $result->lon];
-            }catch (\Exception $e) {
-                $position = [];
-            }
+                $lat = $result->lat;
+                $long = $result->lon;
+            }catch (\Exception $e) {}
 
             try {
                 $description = $content->description;
@@ -77,7 +78,8 @@ class OutingCreator
                 ->setUpdated(new \DateTime())
                 ->setOwner($owner)
                 ->setDescription($description)
-                ->setPosition($position);
+                ->setLat($lat)
+                ->setLong($long);
 
             $this->entityManager->persist($outing);
             $this->entityManager->flush();

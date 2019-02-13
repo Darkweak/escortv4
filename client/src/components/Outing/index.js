@@ -20,6 +20,7 @@ import '../Layout/css/main.css';
 import {DangerAlert, InfoAlert, WarningAlert} from "../Alerts";
 import {getOutingsList} from "../Welcome/store/action";
 import {connect} from "react-redux";
+import {InputWithDelay} from "../InputWithDelay";
 
 const mapStateToProps = ({
   outingsListReducer: {
@@ -55,6 +56,9 @@ export const OutingList = compose(
   })
 )(({fetch_outings_error, history, is_fetching_outings, outing_created_elements, outings_list, toggle, toggled, setToggle, ...rest}) => (
   <Fragment>
+    <div className={'pt-1 pb-2'}>
+      <InputWithDelay className={'w-100'}/>
+    </div>
     <Row className={'m-0 pt-3 pb-3'}>
       <Button className={'primary white-text'} onClick={toggle}>
         <FontAwesomeIcon icon="plus"/> Proposer une sortie

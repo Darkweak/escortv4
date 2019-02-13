@@ -1,6 +1,9 @@
 export const OUTING_CREATE_FAILED = 'OUTING_CREATE_FAILED';
 export const OUTING_CREATE_REQUEST = 'OUTING_CREATE_REQUEST';
 export const OUTING_CREATE_SUCCESS = 'OUTING_CREATE_SUCCESS';
+export const OUTING_FETCH_AROUND_FAILED = 'OUTING_FETCH_AROUND_FAILED';
+export const OUTING_FETCH_AROUND_REQUEST = 'OUTING_FETCH_AROUND_REQUEST';
+export const OUTING_FETCH_AROUND_SUCCESS = 'OUTING_FETCH_AROUND_SUCCESS';
 export const OUTING_SHOW_FAILED = 'OUTING_SHOW_FAILED';
 export const OUTING_SHOW_REQUEST = 'OUTING_SHOW_REQUEST';
 export const OUTING_SHOW_SUCCESS = 'OUTING_SHOW_SUCCESS';
@@ -26,5 +29,10 @@ export const applyToParticipate = data => ({
 
 export const detectParticipate = data => ({
   type: OUTING_PARTICIPATE_DETECT,
+  payload: data,
+});
+
+export const fetchAroundCity = data => ({
+  type: OUTING_FETCH_AROUND_REQUEST,
   payload: data,
 });

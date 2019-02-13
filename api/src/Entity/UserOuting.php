@@ -36,7 +36,7 @@ class UserOuting
 
     /**
      * @ORM\ManyToOne(targetEntity="Outing", inversedBy="participants")
-     * @Groups({"user_outing_output_admin", "user_output_profile"})
+     * @Groups({"user_outing_output_admin", "user_output_profile", "user_output_profile"})
      */
     private $participateTo;
 

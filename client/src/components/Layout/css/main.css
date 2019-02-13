@@ -134,9 +134,21 @@ body {
 }
 
 .bg-title_outing {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
     background-color: #23022E;
 }
 
 .no-style {
     list-style: none;
+}
+
+@media screen and (min-width: 768px){
+    .b-right-md {
+        border-right: 1px solid darkgrey;
+    }
+
+    .b-left-md {
+        border-left: 1px solid darkgrey;
+    }
 }
