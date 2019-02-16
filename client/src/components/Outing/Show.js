@@ -4,8 +4,8 @@ import '../Layout/css/main.css';
 import {retrieveOuting} from "./store/action";
 import {connect} from "react-redux";
 import {Layout} from "../Layout";
-import {TextContainer} from "../Layout/TextContainer";
-import {DangerAlert, InfoAlert, SuccessAlert, WarningAlert} from "../Alerts";
+import {TextContainer, TextTruncate} from "../Layout/TextContainer";
+import {DangerAlert, SuccessAlert, WarningAlert} from "../Alerts";
 import {
   Col,
   Container,
@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {ShowMap} from "../Map";
 import {getUsername} from "../../functions/logged";
 import {ButtonHandleParticipate} from "./HandleParticipate";
+import {Fetching} from "../Layout/Loader";
 
 const mapStateToProps = ({
   formReducer: {
@@ -67,17 +68,17 @@ export const OutingShow = compose(
     {
       is_fetching_outing ?
         <Container className={'pt-4 pb-4'}>
-          <InfoAlert content={'Chargement de la sortie sélectionnée'}/>
+          <Fetching content={'de la sortie sélectionnée'}/>
         </Container> :
         outing ?
           <Fragment>
             <TextContainer className={'bg-title_outing'} content={{title: outing.name}}/>
-            <Container>
+            <Container className={'fs-140 pt-3 pb-3'}>
               {
                 outing.description &&
-                <div className={'pt-3 pb-3'}>
-                  <span><FontAwesomeIcon icon="file-alt" /> {outing.description}</span>
-                </div>
+                  <p>
+                    <FontAwesomeIcon icon='file-alt'/> <TextTruncate maxSize={100} content={` ${outing.description}`}/>
+                  </p>
               }
             </Container>
             <Container className={'fs-140 pt-3 pb-3'}>

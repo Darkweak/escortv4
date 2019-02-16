@@ -39,12 +39,10 @@ ingress:
 
 postgresql:
   enabled: true
-  imageTag: 10-alpine
-  # If bringing your own PostgreSQL, the full uri to use
-  #url: postgres://api-platform:!ChangeMe!@example.com/api
-  postgresUser: api-platform
-  postgresPassword: ChangeMe
-  postgresDatabase: api
+  imageTag: 9.6-alpine
+  postgresUser: escort
+  postgresPassword: escort
+  postgresDatabase: escort
   # Persistent Volume Storage configuration.
   # ref: https://kubernetes.io/docs/user-guide/persistent-volumes
   persistence:

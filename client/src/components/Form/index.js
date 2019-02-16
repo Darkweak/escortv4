@@ -11,6 +11,7 @@ import {
 import {slugify} from "../../functions/slugify";
 import {redirectTo} from "../../functions/redirect";
 import {Loader} from "../Layout/Loader";
+import '../Layout/css/main.css';
 
 const mapStateToProps = ({formReducer: {is_fetching}}) => ({
   is_fetching,
@@ -24,7 +25,7 @@ export const Form = connect(
     {
       fields.map((field, index) => (
         <FormGroup key={index}>
-          <Label for={slugify(field.label)}>{field.label}</Label>
+          <Label for={slugify(field.label)}>{field.label}{!field.not_required && <span className={'required'}>*</span>}</Label>
           <Input
             type={field.type}
             name={field.name ?

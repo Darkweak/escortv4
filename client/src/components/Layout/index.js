@@ -18,6 +18,6 @@ export const Layout = ({children, defaultContainer, ...rest}) => (
       }
     </div>
     <ReturnToTop/>
-    <Footer/>
+    <Footer {...rest}/>
   </Fragment>
 )

@@ -17,10 +17,12 @@ import {redirectTo} from "../../functions/redirect";
 import {compose, lifecycle, withHandlers, withState} from 'recompose';
 import {OutingForm} from "./Form";
 import '../Layout/css/main.css';
-import {DangerAlert, InfoAlert, WarningAlert} from "../Alerts";
+import {DangerAlert, WarningAlert} from "../Alerts";
 import {getOutingsList} from "../Welcome/store/action";
 import {connect} from "react-redux";
 import {InputWithDelay} from "../InputWithDelay";
+import {TextTruncate} from "../Layout/TextContainer";
+import {Fetching} from "../Layout/Loader";
 
 const mapStateToProps = ({
   outingsListReducer: {
@@ -72,7 +74,7 @@ export const OutingList = compose(
     </Modal>
     {
       is_fetching_outings ?
-        <InfoAlert content={'Récupération des sorties en cours...'}/> :
+        <Fetching content={'des sorties'}/> :
         fetch_outings_error ?
           <DangerAlert content={'Erreur lors de la récupération des sorties...'}/> :
           !outings_list.length && !outing_created_elements.length &&
@@ -84,7 +86,7 @@ export const OutingList = compose(
           [...outing_created_elements.reverse(), ...outings_list].map((item, index) => (
             <Col key={index} xs={12} md={6} className={'p-1'}>
               <Card key={index} className={'b-secondary'}>
-                <CardHeader className={'text-center secondary text-white'}>{item.name}</CardHeader>
+                <CardHeader className={'text-center secondary text-white'}><TextTruncate maxSize={35} unDeploy content={item.name}/></CardHeader>
                 <CardHeader className={'text-center reverse'}>créé par {item.owner.username}</CardHeader>
                 <CardBody>
                   <Row className={'justify-content-between ml-0 mr-0 mt-1 mb-1'}>

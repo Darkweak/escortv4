@@ -18,6 +18,7 @@ import {Welcome} from "./components/Welcome/Welcome";
 import {Login} from "./components/Login";
 import {Register} from "./components/Register";
 import {Profile} from "./components/User";
+import {CGU} from "./components/CGU";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCalendarAlt, faEye, faFileAlt, faMapMarkerAlt, faMoneyBillAlt, faPlus, faQuestionCircle, faUser, faUserClock, faUsers, faUserShield } from '@fortawesome/free-solid-svg-icons';
 import {OutingShow} from "./components/Outing/Show";
@@ -82,6 +83,7 @@ ReactDOM.render(
         <Route path="/profile" component={Profile} strict exact/>
         <Route path="/login" component={Login} strict exact/>
         <Route path="/register" component={Register} strict exact/>
+        <Route path="/cgu" component={CGU} strict exact/>
         <Route path="/" component={Welcome} strict exact/>
         {/* Add your routes here */}
         <Route render={() => <h1>Not Found</h1>} />

@@ -4,6 +4,7 @@ import {
   Container,
   Row,
 } from 'reactstrap';
+import {redirectTo} from "../../functions/redirect";
 
 const contents = [
   {
@@ -11,7 +12,8 @@ const contents = [
       xs: 2,
       md: 1,
     },
-    text: `Développé par @Darkweak`,
+    text: `Développé par @Darkweak_dev`,
+    redirect: 'https://twitter.com/darkweak_dev',
   },
   {
     position: {
@@ -26,17 +28,19 @@ const contents = [
       md: 3,
     },
     text: `CGU`,
+    innerRedirect: true,
+    redirect: '/cgu'
   },
 ];
 
-export const Footer = () => (
+export const Footer = ({history}) => (
   <footer className="footer primary">
     <Container>
       <Row>
         {
           contents.map((content, index) => (
             <Col key={index} xs={{ size: 12, order: content.position.xs}} md={{ size: 4, order: content.position.md}} className={'footer-content'}>
-              <span>{content.text}</span>
+              <span className={'nav-item'} onClick={() => content.innerRedirect ? redirectTo(history, content.redirect) : window.location.href = content.redirect}>{content.text}</span>
             </Col>
           ))
         }

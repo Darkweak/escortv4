@@ -7,7 +7,6 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
@@ -20,8 +19,15 @@ services:
         - ${CONTAINER_REGISTRY_BASE}/php
         - ${CONTAINER_REGISTRY_BASE}/nginx
         - ${CONTAINER_REGISTRY_BASE}/varnish
+    environment:
+      - TRUSTED_HOSTS=^api.${DOMAIN_NAME}$$
+      - CORS_ALLOW_ORIGIN=^https?://((api|cache)\.)?${DOMAIN_NAME}(:[0-9]+)?$$
+      - DATABASE_URL=postgres://${DB_USERNAME}:${DB_PASSWORD}@db/${DB_HOST}
+    links:
+      - mailer
     depends_on:
       - db
+      - mailer
     volumes:
       - ./api:/srv/api:rw,cached
 
@@ -62,9 +68,9 @@ services:
   db:
     image: postgres:9.6-alpine
     environment:
-      - POSTGRES_DB=api
-      - POSTGRES_USER=api-platform
-      - POSTGRES_PASSWORD=!ChangeMe!
+      - POSTGRES_DB=${DB_HOST}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
     volumes:
       - db-data:/var/lib/postgresql/data:rw
 
@@ -88,10 +94,18 @@ services:
       - traefik.port=3000
   
   mailer:
-    image: catatnight/postfix
+    image: juanluisbaptiste/postfix:latest
+    restart: always
     environment:
-      - maildomain=${DOMAIN_NAME}
-      - smtp_user=${SMTP_USER}:${SMTP_PASSWORD}
+      - SMTP_PORT=587
+      - SMTP_SERVER=smtp.eu.mailgun.org
+      - SMTP_USERNAME=${SMTP_USER}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SERVER_HOSTNAME=${DOMAIN_NAME}
+    ports:
+      - "25:25"
+      - "465:465"
+      - "587:587"
     
 
 volumes:

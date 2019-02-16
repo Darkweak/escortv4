@@ -10,7 +10,7 @@ const mapStatetoProps = ({
   }
 }) => ({
   is_fetching
-})
+});
 
 let mytimeout;
 

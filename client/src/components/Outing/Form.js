@@ -58,6 +58,12 @@ const fields = [
     placeholder: '18:30',
     pattern: '(([0-1][0-9])|(2[0-4])):(([0-5][0-9])|(60))',
   },
+  {
+    label: 'Description',
+    type: 'textarea',
+    placeholder: 'Décrivez votre sortie ici',
+    not_required: true,
+  },
 ];
 
 const mapStateToProps = ({

@@ -15,6 +15,8 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../Layout/css/main.css';
 import {redirectTo} from "../../functions/redirect";
+import {TextTruncate} from "../Layout/TextContainer";
+import {Fetching} from "../Layout/Loader";
 
 const mapStateToProps = ({
                            userReducer: {
@@ -28,7 +30,7 @@ const ProfileOuting = ({outing, history}) => (
   <Card>
     <CardBody className={'text-center'}>
       <CardText>
-        {outing.name}
+        <TextTruncate maxSize={33} unDeploy content={outing.name}/>
       </CardText>
       <Button className={'primary white-text'} onClick={() => redirectTo(history, outing['@id'])}>
         <FontAwesomeIcon icon="eye" /> Voir l'annonce
@@ -78,7 +80,7 @@ export const Profile = compose(
             </Col>
           </Row>
         </div> :
-        <InfoAlert content={'Chargement de votre profil en cours'}/>
+        <Fetching content={'de votre profil'}/>
     }
   </Layout>
 ));

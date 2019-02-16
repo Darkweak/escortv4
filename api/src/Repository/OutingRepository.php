@@ -24,6 +24,7 @@ class OutingRepository extends ServiceEntityRepository
                 'lon_min' => $lon - ($radius/80),
                 'lon_max' => $lon + ($radius/80),
             ])
+            ->orderBy('o.created', 'DESC')
             ->getQuery()
             ->getResult();
     }
