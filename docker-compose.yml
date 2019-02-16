@@ -30,6 +30,8 @@ services:
       - mailer
     volumes:
       - ./api:/srv/api:rw,cached
+    networks:
+      - escort
 
   api:
     image: ${CONTAINER_REGISTRY_BASE}/nginx
@@ -46,6 +48,8 @@ services:
       - ./api/public:/srv/api/public:ro
     labels:
       - traefik.frontend.rule=Host:api.${DOMAIN_NAME}
+    networks:
+      - escort
 
   cache-proxy:
     image: ${CONTAINER_REGISTRY_BASE}/varnish
@@ -64,6 +68,8 @@ services:
       - /usr/local/var/varnish:exec
     labels:
       - traefik.frontend.rule=Host:cache.${DOMAIN_NAME}
+    networks:
+      - escort
 
   db:
     image: postgres:9.6-alpine
@@ -73,6 +79,8 @@ services:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
     volumes:
       - db-data:/var/lib/postgresql/data:rw
+    networks:
+      - escort
 
   client:
     image: ${CONTAINER_REGISTRY_BASE}/client
@@ -92,6 +100,8 @@ services:
     labels:
       - traefik.frontend.rule=Host:${DOMAIN_NAME}
       - traefik.port=3000
+    networks:
+      - escort
   
   mailer:
     image: juanluisbaptiste/postfix:latest
@@ -106,7 +116,13 @@ services:
       - "25:25"
       - "465:465"
       - "587:587"
+    networks:
+      - escort
     
 
 volumes:
   db-data: {}
+
+networks:
+  escort:
+    external: true
