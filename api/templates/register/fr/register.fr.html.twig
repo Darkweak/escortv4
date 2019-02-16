@@ -1,0 +1,11 @@
+{% extends '/register/base.register.html.twig' %}
+
+{% block body %}
+    <span>Félicitations {{ username }}, votre inscription a été validée, il ne vous reste plus qu'à activer votre compte</span>
+    <p>Pour se faire, il vous suffit de cliquer sur <a href="{{ redirect_url }}">ce lien</a></p>
+{% endblock %}
+{% block footer %}
+    <div id="footer">
+        <span>Si vous ne vous êtes pas inscrit sur ce site, veuillez ignorer ce message ! Tant que vous ne validerez pas l'email le compte sera inactif</span>
+    </div>
+{% endblock %}

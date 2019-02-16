@@ -19,6 +19,7 @@ import {Login} from "./components/Login";
 import {Register} from "./components/Register";
 import {Profile} from "./components/User";
 import {CGU} from "./components/CGU";
+import {NotFound} from "./components/Layout/NotFound";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCalendarAlt, faEye, faFileAlt, faMapMarkerAlt, faMoneyBillAlt, faPlus, faQuestionCircle, faUser, faUserClock, faUsers, faUserShield } from '@fortawesome/free-solid-svg-icons';
 import {OutingShow} from "./components/Outing/Show";
@@ -32,6 +33,7 @@ import outingReducer from './components/Outing/store/reducer';
 import UserSaga from './sagas/user';
 import userReducer from './components/User/store/reducer';
 import outingsListReducer from './components/Welcome/store/reducer';
+import {Activate} from "./components/User/Activate";
 
 const sagaMiddleware = createSagaMiddleware();
 const history = createBrowserHistory();
@@ -79,14 +81,14 @@ ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Switch>
+        <Route path="/activate/:id" component={Activate} strict exact/>
         <Route path="/outings/:id" component={OutingShow} strict exact/>
         <Route path="/profile" component={Profile} strict exact/>
         <Route path="/login" component={Login} strict exact/>
         <Route path="/register" component={Register} strict exact/>
         <Route path="/cgu" component={CGU} strict exact/>
         <Route path="/" component={Welcome} strict exact/>
-        {/* Add your routes here */}
-        <Route render={() => <h1>Not Found</h1>} />
+        <Route component={NotFound} />
       </Switch>
     </ConnectedRouter>
   </Provider>,

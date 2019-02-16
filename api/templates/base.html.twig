@@ -2,11 +2,52 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <style>
+            .head{
+                font-size: 3em;
+                color: #eaeaea;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+                text-align: center;
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+                text-decoration: none;
+            }
+
+            .primary {
+                background-color: #662D91;
+                color: whitesmoke;
+            }
+
+            #body-content {
+                padding-bottom: 2em;
+                padding-top: 2em;
+            }
+
+            #main {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+                font-size: 160%;
+                font-weight: lighter;
+                text-align: center
+            }
+
+            #footer {
+                border-top: 3px solid #cecece;
+                padding-top: 1em;
+                padding-bottom: 1em;
+            }
+        </style>
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        <div id="main">
+            <div class="head primary">
+                <span>escort-me</span>
+            </div>
+            <div id="body-content">
+                {% block body %}{% endblock %}
+            </div>
+            <div class="primary">
+                {% block footer %}{% endblock %}
+            </div>
+        </div>
     </body>
 </html>

@@ -9,3 +9,8 @@ participate:
     path: /participate
     methods: [POST]
     controller: App\Controller\Participate
+
+activate:
+    path: /activate
+    methods: [POST]
+    controller: App\Controller\Activate

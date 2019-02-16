@@ -4,6 +4,8 @@ const initialState = {
   fetching_profile: false,
   fetching_profile_error: false,
   profile: null,
+
+  fetching_activation: false,
 };
 
 export default (state = initialState, {payload, type}) => {

@@ -1,5 +1,6 @@
 import {all, takeEvery} from 'redux-saga/effects';
 import {
+  ACTIVATE_USER_REQUEST,
   RETRIEVE_PROFILE_FAILED,
   RETRIEVE_PROFILE_REQUEST,
   RETRIEVE_PROFILE_SUCCESS
@@ -20,6 +21,13 @@ function* handleUser(action) {
         body: payload,
       });
       break;
+    case ACTIVATE_USER_REQUEST:
+      yield commonRequest({
+        pathname: '/activate',
+        method: 'POST',
+        body: payload,
+      });
+      break;
     default:
       break;
   }
@@ -27,4 +35,5 @@ function* handleUser(action) {
 
 export default function* watchUser() {
   yield all([takeEvery(RETRIEVE_PROFILE_REQUEST, handleUser)]);
+  yield all([takeEvery(ACTIVATE_USER_REQUEST, handleUser)]);
 }

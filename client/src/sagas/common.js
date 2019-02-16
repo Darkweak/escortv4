@@ -42,10 +42,12 @@ export function* commonRequest(item) {
       return response.json();
     });
     yield handleResponse(response);
-    yield put({
-      type: errored ? callback_events.error : callback_events.success,
-      payload: is_list ? response["hydra:member"] : response,
-    });
+    callback_events ?
+      yield put({
+        type: errored ? callback_events.error : callback_events.success,
+        payload: is_list ? response["hydra:member"] : response,
+      }) :
+      yield
   } catch (e) {
   }
 }
