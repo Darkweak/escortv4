@@ -37,7 +37,7 @@ class OutingCreator
                 $street = $content->street;
                 $postcode = $content->postcode;
                 $city = $content->city;
-                $date = \DateTime::createFromFormat('d/m/Y G:i', "{$content->date} {$content->heure}");
+                $date = \DateTime::createFromFormat('d/m/Y G:i', "{$content->date}");
             } catch (\Exception $e) {
                 throw new BadRequestHttpException();
             }

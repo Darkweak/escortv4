@@ -49,14 +49,7 @@ const fields = [
   {
     label: 'Date',
     type: 'datetime',
-    placeholder: '01/01/2019',
-    pattern: '(([0][1-9])|([1-2][0-9])|([3][0-1]))\\/((0[1-9])|(1[0-2]))\\/20((19)|(2[0-9]))',
-  },
-  {
-    label: 'Heure',
-    type: 'text',
-    placeholder: '18:30',
-    pattern: '(([0-1][0-9])|(2[0-4])):(([0-5][0-9])|(60))',
+    placeholder: '01/01/2019 18:30',
   },
   {
     label: 'Description',

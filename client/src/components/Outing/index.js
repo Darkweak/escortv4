@@ -87,17 +87,11 @@ export const OutingList = compose(
             <Col key={index} xs={12} md={6} className={'p-1'}>
               <Card key={index} className={'b-secondary'}>
                 <CardHeader className={'text-center secondary text-white'}><TextTruncate maxSize={35} unDeploy content={item.name}/></CardHeader>
-                <CardHeader className={'text-center reverse'}>créé par {item.owner.username}</CardHeader>
+                <CardHeader className={'text-center secondary card-header-secondary text-white'}>créé par {item.owner.username}</CardHeader>
                 <CardBody>
-                  <Row className={'justify-content-between ml-0 mr-0 mt-1 mb-1'}>
-                    <div className={'d-flex'}>
-                      <CardText><FontAwesomeIcon icon="map-marker-alt" />{` ${item.street}`}</CardText>
-                    </div>
-                    <div>
-                      <CardText>{`${item.postcode} ${item.city}`}</CardText>
-                    </div>
-                  </Row>
-                  <CardText><FontAwesomeIcon icon="calendar-alt" />{` ${transformDate(item.date)}`}</CardText>
+                  <div className={'bg-outing'}></div>
+                  <CardText className={'text-center mt-1 mb-1'}><FontAwesomeIcon icon="map-marker-alt" />{` ${item.street}`}</CardText>
+                  <CardText className={'text-center'}><FontAwesomeIcon icon="calendar-alt" />{` ${transformDate(item.date)}`}</CardText>
                   <div className={'text-center'}>
                     <Button className={'primary white-text'} onClick={() => redirectTo(history, `${item['@id']}`)}>
                       <FontAwesomeIcon icon="eye" /> Voir l'annonce
