@@ -21,7 +21,7 @@ services:
         - ${CONTAINER_REGISTRY_BASE}/varnish
     environment:
       - APP_URL=${HTTP_OR_SSL}${DOMAIN_NAME}
-      - TRUSTED_HOSTS=^api.${DOMAIN_NAME}$$
+      - TRUSTED_HOSTS=^(api|cache).${DOMAIN_NAME}$$
       - CORS_ALLOW_ORIGIN=^https?://((api|cache|preprod)\.)?${DOMAIN_NAME}(:[0-9]+)?$$
       - DATABASE_URL=postgres://${DB_USERNAME}:${DB_PASSWORD}@db/${DB_HOST}
     links:
