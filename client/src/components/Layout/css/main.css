@@ -2,6 +2,10 @@
     background-color: #662D91 !important;
 }
 
+.b-t-primary {
+    border-top: 3px solid #662D91;
+}
+
 .color-primary {
     color: #662D91 !important;
     font-weight: bolder;
@@ -186,6 +190,10 @@ body {
     height: 100%;
 }
 
+.bg-register-welcome {
+    background: url("https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80") center center;
+}
+
 .card-header {
     padding: 0;
     font-size: 2rem;
@@ -207,4 +215,8 @@ body {
 
 .p-relative {
     position: relative;
+}
+
+.bg-opacity {
+    background-color: rgba(255, 255, 255, 0.4);
 }

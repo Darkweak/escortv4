@@ -4,7 +4,8 @@ import {OutingList} from "../Outing";
 import {isLogged} from "../../functions/logged";
 import {Carousel} from "../Carousel";
 import {TextContainer} from "../Layout/TextContainer";
-import {ImageFullHeight} from "../Images";
+import {Button} from 'reactstrap';
+import {redirectTo} from "../../functions/redirect";
 
 const welcomeItems = [
   {
@@ -36,12 +37,12 @@ export const Welcome = ({fetch_outings_error, is_fetching_outings, outing_create
         <div className={'pt-4 pb-4'}>
           <OutingList {...rest}/>
         </div>:
-        <WelcomeDefault/>
+        <WelcomeDefault {...rest}/>
     }
   </Layout>
 );
 
-const WelcomeDefault = () => (
+const WelcomeDefault = ({history}) => (
   <Fragment>
     <Carousel/>
     {
@@ -49,6 +50,11 @@ const WelcomeDefault = () => (
         <TextContainer key={index} reverse={index%2 === 1} content={welcomeItem}/>
       ))
     }
-    <ImageFullHeight image={'http://image.noelshack.com/fichiers/2019/07/7/1550420503-dksiec8u8aauvmd.jpg'}/>
+    <div className={`reverse bg-register-welcome text-center`}>
+      <div className={'pt-5 pb-5 bg-opacity'}>
+        <h1 className={'text-center pb-2'}>Commence l'aventure dès maintenant</h1>
+        <Button className={'primary fsr-5 pl-4 pr-4'} onClick={() => redirectTo(history, '/register')}>Inscris-toi !</Button>
+      </div>
+    </div>
   </Fragment>
 );
