@@ -29,7 +29,7 @@ class SearchAround
             );
             $result_position = json_decode($fetch_positions->getBody())[0];
 
-            return $manager->getRepository(Outing::class)->findByPositionAround($result_position->lat, $result_position->lon, 40);
+            return $manager->getRepository(Outing::class)->findByPositionAround($position, $result_position->lat, $result_position->lon, 40);
         }catch (\Exception $e) {
             throw new BadRequestHttpException($e);
         }

@@ -195,3 +195,16 @@ body {
     padding: 0 0 1.25rem 0;
     font-size: 1rem;
 }
+
+.city-show {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    font-size: 200%;
+    transform: translateY(-50%);
+    color: #3F3F3F;
+}
+
+.p-relative {
+    position: relative;
+}

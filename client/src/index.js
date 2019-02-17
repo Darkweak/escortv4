@@ -34,6 +34,7 @@ import UserSaga from './sagas/user';
 import userReducer from './components/User/store/reducer';
 import outingsListReducer from './components/Welcome/store/reducer';
 import {Activate} from "./components/User/Activate";
+import './components/Layout/css/main.css';
 
 const sagaMiddleware = createSagaMiddleware();
 const history = createBrowserHistory();

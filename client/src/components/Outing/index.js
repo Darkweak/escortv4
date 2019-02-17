@@ -86,8 +86,13 @@ export const OutingList = compose(
           [...outing_created_elements.reverse(), ...outings_list].map((item, index) => (
             <Col key={index} xs={12} md={6} className={'p-1'}>
               <Card key={index} className={'b-secondary'}>
-                <CardHeader className={'text-center secondary text-white'}><TextTruncate maxSize={35} unDeploy content={item.name}/></CardHeader>
-                <CardHeader className={'text-center secondary card-header-secondary text-white'}>créé par {item.owner.username}</CardHeader>
+                <div className={'p-relative'}>
+                  <span className={'city-show'}>
+                    <TextTruncate maxSize={17} unDeploy content={item.city}/>
+                  </span>
+                  <CardHeader className={'text-center secondary text-white'}><TextTruncate maxSize={35} unDeploy content={item.name}/></CardHeader>
+                  <CardHeader className={'text-center secondary card-header-secondary text-white'}>par {item.owner.username}</CardHeader>
+                </div>
                 <CardBody>
                   <div className={'bg-outing'}></div>
                   <CardText className={'text-center mt-1 mb-1'}><FontAwesomeIcon icon="map-marker-alt" />{` ${item.street}`}</CardText>
