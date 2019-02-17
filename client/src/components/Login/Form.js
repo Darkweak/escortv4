@@ -7,7 +7,7 @@ import {WarningAlert} from "../Alerts";
 const fields = [
   {
     label: 'Nom d\'utilisateur',
-    type: 'email',
+    type: 'text',
     placeholder: 'johndoe',
     name: 'username',
   },
