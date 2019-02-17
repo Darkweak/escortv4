@@ -46,7 +46,7 @@ final class RegisterSubscriber implements EventSubscriberInterface
         $this->manager->persist($user);
         $this->manager->flush();
         $message = (new \Swift_Message('Bienvenue sur escort-me'))
-            ->setFrom('sylvain@escort-me.online')
+            ->setFrom('no-reply@escort-me.online')
             ->setTo($user->getEmail())
             ->setBody(
                 $this->environment->render(
