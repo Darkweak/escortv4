@@ -1,8 +1,8 @@
-{% extends '/register/base.register.html.twig' %}
+{% extends '/reset/base.reset.html.twig' %}
 
 {% block body %}
-    <span>Félicitations {{ username }}, votre inscription a été validée, il ne vous reste plus qu'à activer votre compte</span>
-    <p>Pour se faire, il vous suffit de cliquer sur <a href="{{ redirect_url }}">ce lien</a></p>
+    <span>Suite à votre demande de réinitialisation de votre mot de passe</span>
+    <p>Votre compte sera bloqué jusqu'à ce que vous réinitialisez le mot de passe en cliquant sur <a href="{{ redirect_url }}">ce lien</a></p>
 {% endblock %}
 {% block footer %}
     <div id="footer">

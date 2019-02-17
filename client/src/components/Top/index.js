@@ -1,5 +1,6 @@
 import React from 'react';
 import './top.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function scrollIt(destination = 0, duration = 200, easing = 'linear', callback) {
 
@@ -82,6 +83,8 @@ function scrollIt(destination = 0, duration = 200, easing = 'linear', callback) 
 
 export const ReturnToTop = () => (
   <div className={'return-to-top-container'} onClick={() => scrollIt()}>
-    <span>^</span>
+    <div className={'return-to-top'}>
+      <span className={'text-to-top'}><FontAwesomeIcon icon='caret-up'/></span>
+    </div>
   </div>
 );

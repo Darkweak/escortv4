@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import {Form} from "../Form";
 import '../../../node_modules/bootstrap/dist/css/bootstrap.css'
 import '../Layout/css/main.css';
@@ -77,21 +77,19 @@ export const OutingForm = connect(
     createOuting: (...args) => dispatch(createOuting(...args))
   })
 )(({createOuting, outing_created, outing_creation_error, outing_creation_error_cause, ...rest}) => (
-  <Fragment>
-    <div className={'pt-4 pb-4'}>
-      {
-        outing_creation_error && outing_creation_error_cause && outing_creation_error_cause.length ?
-          outing_creation_error_cause.map(cause => <DangerAlert content={cause.message}/>) : null
-      }
-      {
-        outing_created ? <SuccessAlert content={'Votre sortie a bien été créée'}/> : null
-      }
-      <Form
-        handleSubmit={(...args) => createOuting(...args)}
-        identifier={'escort-outing'}
-        fields={fields}
-        {...rest}
-      />
-    </div>
-  </Fragment>
+  <div className={'pt-4 pb-4'}>
+    {
+      outing_creation_error && outing_creation_error_cause && outing_creation_error_cause.length ?
+        outing_creation_error_cause.map(cause => <DangerAlert content={cause.message}/>) : null
+    }
+    {
+      outing_created ? <SuccessAlert content={'Votre sortie a bien été créée'}/> : null
+    }
+    <Form
+      handleSubmit={(...args) => createOuting(...args)}
+      identifier={'escort-outing'}
+      fields={fields}
+      {...rest}
+    />
+  </div>
 ));

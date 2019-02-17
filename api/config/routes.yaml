@@ -14,3 +14,13 @@ activate:
     path: /activate
     methods: [POST]
     controller: App\Controller\Activate
+
+apply-reset-password:
+    path: /apply-reset-password
+    methods: [POST]
+    controller: App\Controller\ApplyResetPassword
+
+reset-password:
+    path: /reset-password/{token}
+    methods: [POST]
+    controller: App\Controller\ResetPassword

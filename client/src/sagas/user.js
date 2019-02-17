@@ -6,6 +6,14 @@ import {
   RETRIEVE_PROFILE_SUCCESS
 } from "../components/User/store/action";
 import {commonRequest} from "./common";
+import {
+  APPLY_REINITIALIZE_PASSWORD_FAILED,
+  APPLY_REINITIALIZE_PASSWORD_REQUEST,
+  APPLY_REINITIALIZE_PASSWORD_SUCCESS,
+  REINITIALIZE_PASSWORD_FAILED,
+  REINITIALIZE_PASSWORD_REQUEST,
+  REINITIALIZE_PASSWORD_SUCCESS
+} from "../components/ForgotPassword/store/action";
 
 function* handleUser(action) {
   const {payload, type} = action;
@@ -28,6 +36,28 @@ function* handleUser(action) {
         body: payload,
       });
       break;
+    case APPLY_REINITIALIZE_PASSWORD_REQUEST:
+      yield commonRequest({
+        pathname: '/apply-reset-password',
+        method: 'POST',
+        callback_events: {
+          success: APPLY_REINITIALIZE_PASSWORD_SUCCESS,
+          error: APPLY_REINITIALIZE_PASSWORD_FAILED,
+        },
+        body: payload,
+      });
+      break;
+    case REINITIALIZE_PASSWORD_REQUEST:
+      yield commonRequest({
+        pathname: `/reset-password/${payload.token}`,
+        method: 'POST',
+        callback_events: {
+          success: REINITIALIZE_PASSWORD_SUCCESS,
+          error: REINITIALIZE_PASSWORD_FAILED,
+        },
+        body: payload[0],
+      });
+      break;
     default:
       break;
   }
@@ -36,4 +66,6 @@ function* handleUser(action) {
 export default function* watchUser() {
   yield all([takeEvery(RETRIEVE_PROFILE_REQUEST, handleUser)]);
   yield all([takeEvery(ACTIVATE_USER_REQUEST, handleUser)]);
+  yield all([takeEvery(APPLY_REINITIALIZE_PASSWORD_REQUEST, handleUser)]);
+  yield all([takeEvery(REINITIALIZE_PASSWORD_REQUEST, handleUser)]);
 }

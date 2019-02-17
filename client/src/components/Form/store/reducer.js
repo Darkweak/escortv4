@@ -1,6 +1,7 @@
+import * as forgot from '../../ForgotPassword/store/action';
 import * as login from '../../Login/store/action';
-import * as register from '../../Register/store/action';
 import * as outing from '../../Outing/store/action';
+import * as register from '../../Register/store/action';
 import * as user from '../../User/store/action';
 
 const initialState = {
@@ -9,6 +10,8 @@ const initialState = {
 
 export default (state = initialState, {type}) => {
   switch (type) {
+    case forgot.APPLY_REINITIALIZE_PASSWORD_REQUEST:
+    case forgot.REINITIALIZE_PASSWORD_REQUEST:
     case login.LOGIN_REQUEST:
     case register.REGISTER_REQUEST:
     case outing.OUTING_CREATE_REQUEST:
@@ -18,6 +21,10 @@ export default (state = initialState, {type}) => {
         is_fetching: true,
       };
 
+    case forgot.APPLY_REINITIALIZE_PASSWORD_FAILED:
+    case forgot.APPLY_REINITIALIZE_PASSWORD_SUCCESS:
+    case forgot.REINITIALIZE_PASSWORD_FAILED:
+    case forgot.REINITIALIZE_PASSWORD_SUCCESS:
     case login.LOGIN_FAILED:
     case login.LOGIN_SUCCESS:
     case register.REGISTER_FAILED:

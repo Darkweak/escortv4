@@ -21,7 +21,7 @@ const mapStateToProps = ({formReducer: {is_fetching}}) => ({
 export const Form = connect(
   mapStateToProps,
   {}
-)(({button_list, fields, history, handleSubmit, identifier, is_fetching, redirect}) => (
+)(({button_list, fields, history, handleSubmit, identifier, is_fetching, redirect, redirect_list}) => (
   <BForm onSubmit={event => {event.preventDefault(); handleSubmit(event.target.elements)}} id={identifier}>
     {
       fields.map((field, index) => (
@@ -58,6 +58,14 @@ export const Form = connect(
         <div className={'pt-1 pb-1 text-center'} onClick={() => redirectTo(history, redirect.to)}>
           <span className={'redirect'}>{redirect.label}</span>
         </div>
+      )
+    }
+    {
+      redirect_list && redirect_list.length && redirect_list.map((item, index) => (
+        <div key={index} className={'pt-1 pb-1 text-center'} onClick={() => redirectTo(history, item.to)}>
+          <span className={'redirect'}>{item.label}</span>
+        </div>
+        )
       )
     }
   </BForm>

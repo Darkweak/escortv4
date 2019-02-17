@@ -5,16 +5,18 @@
     cursor: pointer;
     color: white;
     position: fixed;
-    height: 30px;
-    width: 30px;
+    height: 3rem;
+    width: 3rem;
     font-size: 2rem;
     bottom: 50px;
     right: 50px;
     border-radius: 5px;
 }
 
-.return-to-top-container > span {
-    margin: auto;
+.text-to-top {
+    position: absolute;
+    text-align: center;
+    width: 100%;
 }
 
 @media screen and (max-width: 767px){

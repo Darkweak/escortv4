@@ -49,6 +49,6 @@ const WelcomeDefault = () => (
         <TextContainer key={index} reverse={index%2 === 1} content={welcomeItem}/>
       ))
     }
-    <ImageFullHeight image={'https://pbs.twimg.com/media/DksiEc8U8AAUvMd.jpg'}/>
+    <ImageFullHeight image={'http://image.noelshack.com/fichiers/2019/07/7/1550420503-dksiec8u8aauvmd.jpg'}/>
   </Fragment>
 );

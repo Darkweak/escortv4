@@ -21,7 +21,7 @@ import {Profile} from "./components/User";
 import {CGU} from "./components/CGU";
 import {NotFound} from "./components/Layout/NotFound";
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCalendarAlt, faEye, faFileAlt, faMapMarkerAlt, faMoneyBillAlt, faPlus, faQuestionCircle, faUser, faUserClock, faUsers, faUserShield } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt, faCaretUp, faEye, faFileAlt, faMapMarkerAlt, faMoneyBillAlt, faPlus, faQuestionCircle, faUser, faUserClock, faUsers, faUserShield } from '@fortawesome/free-solid-svg-icons';
 import {OutingShow} from "./components/Outing/Show";
 import LoginSaga from './sagas/login';
 import loginReducer from './components/Login/store/reducer';
@@ -30,10 +30,12 @@ import registerReducer from './components/Register/store/reducer';
 import formReducer from './components/Form/store/reducer';
 import OutingSaga from './sagas/outing';
 import outingReducer from './components/Outing/store/reducer';
+import forgotPasswordReducer from './components/ForgotPassword/store/reducer';
 import UserSaga from './sagas/user';
 import userReducer from './components/User/store/reducer';
 import outingsListReducer from './components/Welcome/store/reducer';
 import {Activate} from "./components/User/Activate";
+import {ForgotPassword, ResetPassword} from "./components/ForgotPassword";
 import './components/Layout/css/main.css';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -41,6 +43,7 @@ const history = createBrowserHistory();
 const store = createStore(
   combineReducers({
     router: connectRouter(history),
+    forgotPasswordReducer,
     form,
     formReducer,
     loginReducer,
@@ -63,6 +66,7 @@ sagas.map(saga => sagaMiddleware.run(saga));
 
 const faIcons = [
   faCalendarAlt,
+  faCaretUp,
   faEye,
   faFileAlt,
   faMapMarkerAlt,
@@ -84,7 +88,9 @@ ReactDOM.render(
       <Switch>
         <Route path="/activate/:id" component={Activate} strict exact/>
         <Route path="/outings/:id" component={OutingShow} strict exact/>
+        <Route path="/reset-password/:id" component={ResetPassword} strict exact/>
         <Route path="/profile" component={Profile} strict exact/>
+        <Route path="/forgot-password" component={ForgotPassword} strict exact/>
         <Route path="/login" component={Login} strict exact/>
         <Route path="/register" component={Register} strict exact/>
         <Route path="/cgu" component={CGU} strict exact/>

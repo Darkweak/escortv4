@@ -39,7 +39,7 @@ export const LoginForm = connect(
       handleSubmit={(...args) => loginUser(...args)}
       identifier={'escort-login'}
       fields={fields}
-      redirect={{label: 'Pas encore inscrit ?', to: 'register'}} {...rest}
+      redirect_list={[{label: 'Pas encore inscrit ?', to: 'register'}, {label: 'Mot de passe oublié ?', to: 'forgot-password'}]} {...rest}
     />
   </Fragment>
 ));
