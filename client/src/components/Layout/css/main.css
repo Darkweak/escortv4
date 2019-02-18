@@ -120,6 +120,10 @@ body {
     font-size: 5rem;
 }
 
+.fsr-3 {
+    font-size: 3rem;
+}
+
 .dropdown-item {
     font-size: 140%;
 }

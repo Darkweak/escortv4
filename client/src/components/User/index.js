@@ -52,10 +52,10 @@ export const Profile = compose(
     }
   })
 )(({profile, ...rest}) => (
-  <Layout defaultContainer {...rest}>
+  <Layout padding defaultContainer {...rest}>
     {
       profile ?
-        <div className={'pt-4 pb-4 b-ws'}>
+        <div className={'b-ws'}>
           <h1 className={'text-center'}>Bienvenue sur votre profil {profile.username}</h1>
           <Row className={'pt-3 pb-3'}>
             <Col xs={12} md={6} className={'b-right-md'}>

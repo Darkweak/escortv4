@@ -1,0 +1,51 @@
+.first-chart-bob {
+    border-radius: 50%;
+    background-image: linear-gradient(to right, transparent 50%, #008855 0);
+}
+
+.first-chart-escort {
+    position: absolute;
+    border-radius: 50%;
+    background-image: linear-gradient(to left, transparent 50%, #662D91 0);
+}
+
+.second-chart-bob {
+    border-radius: 50%;
+    background-image: linear-gradient(to right, transparent 50%, #008855 0);
+}
+
+.second-chart-escort {
+    z-index: 1;
+    position: absolute;
+    border-radius: 50%;
+    background-image: linear-gradient(to left, transparent 50%, #662D91 0);
+}
+
+.second-chart-bob::before {
+    z-index: -1;
+    content: '';
+    display: block;
+    margin-left: 50%;
+    height: 100%;
+    border-radius: 0 100% 100% 0 / 50%;
+    transform: rotate(.1turn);
+    background-color: #ed969e;
+    transform-origin: left;
+}
+
+.chart {
+    width: 300px;
+    height: 300px;
+}
+
+.color-eScort {
+    color: #662D91;
+}
+
+.color-Bob {
+    color: #008855;
+}
+
+.color-Alice {
+    color: #ed969e;
+}

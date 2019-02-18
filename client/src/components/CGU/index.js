@@ -55,19 +55,17 @@ La responsabilité du site ne peut être engagée en cas de force majeure ou du 
 ];
 
 export const CGU = ({...rest}) => (
-  <Layout defaultContainer {...rest}>
-    <div className={'pt-4 pb-4'}>
-      <h1 className={'text-center'}>Conditions générales d'utilisation</h1>
-      <div className={'pt-4'}>
-        {
-          items.map((item, index) => (
-            <div className={'pt-2 pb-2'} key={index}>
-              <h3 className={'title-cgu'}>Article {`${index+1} : ${item.title}`}</h3>
-              <p>{item.description}</p>
-            </div>
-          ))
-        }
-      </div>
+  <Layout defaultContainer padding {...rest}>
+    <h1 className={'text-center'}>Conditions générales d'utilisation</h1>
+    <div className={'pt-4'}>
+      {
+        items.map((item, index) => (
+          <div className={'pt-2 pb-2'} key={index}>
+            <h3 className={'title-cgu'}>Article {`${index+1} : ${item.title}`}</h3>
+            <p>{item.description}</p>
+          </div>
+        ))
+      }
     </div>
   </Layout>
 )

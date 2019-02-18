@@ -60,24 +60,22 @@ export const Register = compose(
     }
   })
 )(({registered, register_error, register_error_cause, registerUser, ...rest}) => (
-  <Layout defaultContainer {...rest}>
+  <Layout padding defaultContainer {...rest}>
     <Col md={{offset: 2, size: 8}}>
-      <div className={'pt-4 pb-4'}>
-        {
-          register_error && register_error_cause && register_error_cause.length ?
-            register_error_cause.map(cause => <DangerAlert content={cause.message}/>) : null
-        }
-        {
-          registered ? <SuccessAlert content={'Votre compte a bien été créé, un email vient de vous être envoyé'}/> : null
-        }
-        <Form
-          handleSubmit={(...args) => registerUser(...args)}
-          identifier={'escort-register'}
-          fields={fields}
-          redirect={{label: 'Déjà un compte ?', to: 'login'}}
-          {...rest}
-        />
-      </div>
+      {
+        register_error && register_error_cause && register_error_cause.length ?
+          register_error_cause.map(cause => <DangerAlert content={cause.message}/>) : null
+      }
+      {
+        registered ? <SuccessAlert content={'Votre compte a bien été créé, un email vient de vous être envoyé'}/> : null
+      }
+      <Form
+        handleSubmit={(...args) => registerUser(...args)}
+        identifier={'escort-register'}
+        fields={fields}
+        redirect={{label: 'Déjà un compte ?', to: 'login'}}
+        {...rest}
+      />
     </Col>
   </Layout>
 ));

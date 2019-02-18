@@ -37,6 +37,7 @@ import outingsListReducer from './components/Welcome/store/reducer';
 import {Activate} from "./components/User/Activate";
 import {ForgotPassword, ResetPassword} from "./components/ForgotPassword";
 import './components/Layout/css/main.css';
+import {Cashback} from "./components/Cashback";
 
 const sagaMiddleware = createSagaMiddleware();
 const history = createBrowserHistory();
@@ -89,6 +90,7 @@ ReactDOM.render(
         <Route path="/activate/:id" component={Activate} strict exact/>
         <Route path="/outings/:id" component={OutingShow} strict exact/>
         <Route path="/reset-password/:id" component={ResetPassword} strict exact/>
+        <Route path="/cashback" component={Cashback} strict exact/>
         <Route path="/profile" component={Profile} strict exact/>
         <Route path="/forgot-password" component={ForgotPassword} strict exact/>
         <Route path="/login" component={Login} strict exact/>

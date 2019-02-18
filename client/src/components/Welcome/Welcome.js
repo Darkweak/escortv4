@@ -11,7 +11,7 @@ const welcomeItems = [
   {
     icon: 'question-circle',
     title: `Qu'est ce que eScort ?`,
-    description: `eScort est un service qui facilite la mise en relation de plusieurs personnes ou groupes de personnes. Grâce à cette application vous pourrez découvrir les sorties organisées autour de chez vous, et découvrir de nouvelles personnes.`,
+    description: `eScort est un service qui facilite la mise en relation de plusieurs personnes ou groupes de personnes. Grâce à cette application vous pourrez découvrir les sorties organisées autour de chez vous, et découvrir de nouvelles personnes. Vous êtes nouvel arrivant dans une ville et vous ne souhaitez pas passer votre temps libre seul, vous êtes sociable et adorez passer des moments en groupe avec de nouvelles personnes, alors cette application est faite pour vous`,
   },
   {
     icon: 'user-shield',
@@ -26,7 +26,8 @@ const welcomeItems = [
   {
     icon: 'money-bill-alt',
     title: `Investissez et obtenez des royalties`,
-    description: `Faites des dons pour soutenir le projet, en échange vous obtenez un pourcentage de parts dans l'entreprise en fonction du total donné par tous les contributeurs. Plus vous donnez, plus vous obtenez de pourcentage de parts.`,
+    description: `L'application étant 100% gratuite, vous pouvez participer à son développement en effectuant des dons pour soutenir le projet, en échange vous obtenez un pourcentage de parts dans l'entreprise en fonction du total donné par tous les contributeurs. Plus vous donnez, plus vous obtenez de pourcentage de parts.`,
+    learnMore: '/cashback'
   },
 ];
 
@@ -47,13 +48,13 @@ const WelcomeDefault = ({history}) => (
     <Carousel/>
     {
       welcomeItems.map((welcomeItem, index) => (
-        <TextContainer key={index} reverse={index%2 === 1} content={welcomeItem}/>
+        <TextContainer key={index} reverse={index%2 === 1} content={welcomeItem} history={history}/>
       ))
     }
     <div className={`reverse bg-register-welcome text-center`}>
       <div className={'pt-5 pb-5 bg-opacity'}>
         <h1 className={'text-center pb-2'}>Commence l'aventure dès maintenant</h1>
-        <Button className={'primary fsr-5 pl-4 pr-4'} onClick={() => redirectTo(history, '/register')}>Inscris-toi !</Button>
+        <Button className={'primary fsr-3 pl-4 pr-4'} onClick={() => redirectTo(history, '/register')}>Inscris-toi !</Button>
       </div>
     </div>
   </Fragment>

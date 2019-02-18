@@ -45,8 +45,8 @@ export const ForgotPassword = connect(
     applyReinitializePassword: (...args) => dispatch(applyReinitializePassword(...args))
   })
 )(({applyReinitializePassword, forgot_password_error, forgot_password_success, ...rest}) => (
-  <Layout defaultContainer {...rest}>
-    <Col md={{offset: 2, size: 8}} className={'pt-4 pb-4'}>
+  <Layout padding defaultContainer {...rest}>
+    <Col md={{offset: 2, size: 8}}>
       {
         forgot_password_error ?
           <DangerAlert content={'Erreur, nous ne pouvons pas réinitialiser votre mot de passe pour le moment, réessayez plus tard'}/> :
@@ -70,8 +70,8 @@ export const ResetPassword = connect(
     reinitializePassword: (...args) => dispatch(reinitializePassword(...args))
   })
 )(({reinitializePassword, reset_password_error, reset_password_success, match: {params: {id}}, ...rest}) => (
-  <Layout defaultContainer {...rest}>
-    <Col md={{offset: 2, size: 8}} className={'pt-4 pb-4'}>
+  <Layout padding defaultContainer {...rest}>
+    <Col md={{offset: 2, size: 8}}>
       {
         reset_password_error ?
           <DangerAlert content={'Erreur, nous ne pouvons pas réinitialiser votre mot de passe pour le moment, réessayez plus tard'}/> :

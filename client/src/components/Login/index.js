@@ -23,11 +23,9 @@ export const Login = compose(
     }
   })
 )(({...rest}) => (
-  <Layout defaultContainer {...rest}>
+  <Layout padding defaultContainer {...rest}>
     <Col md={{offset: 2, size: 8}}>
-      <div className={'pt-4 pb-4'}>
-        <LoginForm {...rest}/>
-      </div>
+      <LoginForm {...rest}/>
     </Col>
   </Layout>
 ));
