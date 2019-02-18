@@ -2,26 +2,23 @@
 namespace App\Subscriber;
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\User;
+use App\EscortAbstract\Mailer;
 use Doctrine\ORM\EntityManagerInterface;
-use EscortAbstact\Mailer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-final class RegisterSubscriber implements EventSubscriberInterface
+final class RegisterSubscriber extends Mailer implements EventSubscriberInterface
 {
     private $encoder;
-    private $environment;
-    private $mailer;
     private $manager;
 
     public function __construct(\Swift_Mailer $mailer, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder, \Twig_Environment $environment)
     {
+        parent::__construct($mailer, $environment);
         $this->encoder = $encoder;
-        $this->environment = $environment;
-        $this->mailer = $mailer;
         $this->manager = $manager;
     }
 
@@ -45,17 +42,14 @@ final class RegisterSubscriber implements EventSubscriberInterface
         $user->setToken($token);
         $this->manager->persist($user);
         $this->manager->flush();
-        $message = (new \Swift_Message('Bienvenue sur escort-me'))
-            ->setFrom('no-reply@escort-me.online')
-            ->setTo($user->getEmail())
-            ->setBody(
-                $this->environment->render(
-                    '/register/fr/register.fr.html.twig',
-                    [
-                        'username' => $user->getUsername(),
-                        'redirect_url' => getenv('APP_URL').'/activate/'.$token,
-                    ])
-            )->setContentType("text/html");
-        $this->mailer->send($message);
+        $this->sendEmail(
+            $user,
+            '/register/fr/register.fr.html.twig',
+            'Bienvenue sur escort-me',
+            [
+                'username' => $user->getUsername(),
+                'redirect_url' => getenv('APP_URL').'/activate/'.$token,
+            ]
+        );
     }
 }

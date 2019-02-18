@@ -3,13 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\EscortAbstract\Mailer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class ApplyResetPassword
+class ApplyResetPassword extends Mailer
 {
-    public function __invoke(Request $request, EntityManagerInterface $manager, \Swift_Mailer $mailer, \Twig_Environment $environment)
+    public function __invoke(Request $request, EntityManagerInterface $manager)
     {
         $content = json_decode($request->getContent());
 
@@ -19,24 +20,22 @@ class ApplyResetPassword
                 'email' => $email,
             ]);
 
-            $token = hash('sha512',$user->getUsername().$user->getEmail().(new \DateTime())->format('Y-m-d H:i:s'));
-            $user->setToken($token);
-            $manager->persist($user);
-            $manager->flush();
+            if ($user instanceof User) {
+                $token = hash('sha512',$user->getUsername().$user->getEmail().(new \DateTime())->format('Y-m-d H:i:s'));
+                $user->setToken($token);
+                $manager->persist($user);
+                $manager->flush();
 
-            $message = (new \Swift_Message('Réinitialisation de votre mote de passe'))
-                ->setFrom('no-reply@escort-me.online')
-                ->setTo($user->getEmail())
-                ->setBody(
-                    $environment->render(
-                        '/reset/fr/reset.fr.html.twig',
-                        [
-                            'username' => $user->getUsername(),
-                            'redirect_url' => getenv('APP_URL').'/reset-password/'.$token,
-                        ])
-                )->setContentType("text/html");
-            $mailer->send($message);
-
+                $this->sendEmail(
+                    $user,
+                    '/reset/fr/reset.fr.html.twig',
+                    'Réinitialisation de votre mote de passe',
+                    [
+                        'username' => $user->getUsername(),
+                        'redirect_url' => getenv('APP_URL').'/reset-password/'.$token,
+                    ]
+                );
+            }
         } catch (\Exception $e) {}
 
         return new JsonResponse([]);
