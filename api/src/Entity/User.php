@@ -33,7 +33,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *         "put"={"access_control"="(is_granted('ROLE_USER') and object == user)", "denormalization_context"={"groups"={"user_update"}}}
  *     }
  * )
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="users")
  * @UniqueEntity(fields={"username"}, message="Le nom d'utilisateur est déjà pris")
  * @UniqueEntity(fields={"email"}, message="Cet email est déjà pris")
