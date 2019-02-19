@@ -13,16 +13,10 @@ import {
 import createSagaMiddleware from 'redux-saga';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
+import {generateSitemap} from "./Sitemap";
 import * as serviceWorker from './serviceWorker';
-import {Welcome} from "./components/Welcome/Welcome";
-import {Login} from "./components/Login";
-import {Register} from "./components/Register";
-import {Profile} from "./components/User";
-import {CGU} from "./components/CGU";
-import {NotFound} from "./components/Layout/NotFound";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCalendarAlt, faCaretUp, faEye, faFileAlt, faMapMarkerAlt, faMoneyBillAlt, faPlus, faQuestionCircle, faUser, faUserClock, faUsers, faUserShield } from '@fortawesome/free-solid-svg-icons';
-import {OutingShow} from "./components/Outing/Show";
 import LoginSaga from './sagas/login';
 import loginReducer from './components/Login/store/reducer';
 import RegisterSaga from './sagas/register';
@@ -34,10 +28,15 @@ import forgotPasswordReducer from './components/ForgotPassword/store/reducer';
 import UserSaga from './sagas/user';
 import userReducer from './components/User/store/reducer';
 import outingsListReducer from './components/Welcome/store/reducer';
-import {Activate} from "./components/User/Activate";
-import {ForgotPassword, ResetPassword} from "./components/ForgotPassword";
+import {NotFound} from "./components/Layout/NotFound";
+import {Sitemap} from "./Sitemap";
+import {routes} from "./routes";
 import './components/Layout/css/main.css';
-import {Cashback} from "./components/Cashback";
+
+/*
+let sm = new Sitemap();
+console.log(sm.generateXML());
+*/
 
 const sagaMiddleware = createSagaMiddleware();
 const history = createBrowserHistory();
@@ -87,16 +86,17 @@ ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Switch>
-        <Route path="/activate/:id" component={Activate} strict exact/>
-        <Route path="/outings/:id" component={OutingShow} strict exact/>
-        <Route path="/reset-password/:id" component={ResetPassword} strict exact/>
-        <Route path="/cashback" component={Cashback} strict exact/>
-        <Route path="/profile" component={Profile} strict exact/>
-        <Route path="/forgot-password" component={ForgotPassword} strict exact/>
-        <Route path="/login" component={Login} strict exact/>
-        <Route path="/register" component={Register} strict exact/>
-        <Route path="/cgu" component={CGU} strict exact/>
-        <Route path="/" component={Welcome} strict exact/>
+        {
+          routes.map((route, index) => (
+            <Route
+              key={index}
+              path={`/${route.path}`}
+              component={route.component}
+              strict
+              exact
+            />
+          ))
+        }
         <Route component={NotFound} />
       </Switch>
     </ConnectedRouter>
