@@ -29,6 +29,6 @@ class Route {
   }
 
   toString() {
-    return `<url><loc>${url}/${this.getPath()}</loc><lastmod>${`${new Date().getFullYear()}/${("0" + (new Date().getMonth() + 1)).slice(-2)}/${new Date().getDate()}`}</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>`
+    return `<url><loc>${url}/${this.getPath()}</loc><lastmod>${new Date().toISOString()}</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>`
   }
 }
